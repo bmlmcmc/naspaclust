@@ -2,9 +2,9 @@
 #############INTELLIGENT FIREFLY ALGORITHM##############
 ########################################################
 ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1,
-						fgwc.error=1e-5, fgwc.max.iter=100,randomN=0,vi.dist="uniform", ei.distr="normal",
-						fa.maxiter=200,fa.same=10, nfly=10, ffly.no=2, ffly.dist='euclidean', ffly.order=2, gamma=1, ffly.beta=1,
-            ffly.alpha=1, error=1e-5, r.chaotic=4,m.chaotic=0.7,ind.levy=1,skew.levy=0,scale.levy=1,ffly.alpha.type=4) {
+						error=1e-5, max.iter=100,randomN=0,vi.dist="uniform", ei.distr="normal",
+						fa.same=10, nfly=10, ffly.no=2, ffly.dist='euclidean', ffly.order=2, gamma=1, ffly.beta=1,
+            ffly.alpha=1, r.chaotic=4,m.chaotic=0.7,ind.levy=1,skew.levy=0,scale.levy=1,ffly.alpha.type=4) {
   #require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
@@ -36,7 +36,7 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
   inten <- ffly.new$I
   repeat {
     set.seed(randomN)
-    ffly.alpha <- update_alpha(ffly.alpha,gen,fa.maxiter,ffly.alpha.type)
+    ffly.alpha <- update_alpha(ffly.alpha,gen,max.iter,ffly.alpha.type)
     set.seed(randomN)
     ffly.swarm <- ffly.new$centroid <- moving(ffly.new,ffly.no,ffly.beta,gamma,ffly.alpha,ffly.dist,ffly.order,ei.distr,
       r.chaotic,m.chaotic,ind.levy,skew.levy,sca.levy,data,m,distance,order,mi.mj,distmat,alpha,beta,a,b,randomN)
@@ -62,7 +62,7 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
     }
     gen <- gen+1
     randomN <- randomN+nfly
-    if (gen==fa.maxiter || same==fa.same) break
+    if (gen==max.iter || same==fa.same) break
   }##end repeat
   print(class(ffly.finalpos.other))
   if (class(ffly.finalpos.other)=="list") {
@@ -73,15 +73,14 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
   	new_uij <- ffly.finalpos.other
   	vi <- ffly.finalpos
   }
-  # fgwc <- fgwcuv(data, pop, dist, "v", ncluster, m, order, alpha, a, b, fgwc.max.iter, fgwc.error,
-  #                   randomnn, , vi=vi)
   finaldata=determine_cluster(datax,new_uij)
   cluster=finaldata[,ncol(finaldata)]
   ifa <- list("converg"=conv,"f_obj"=jfgwcv(data,vi,m,distance,order),"membership"=new_uij,"centroid"=vi,
-              "validasi"=index_fgwc(data,cluster,new_uij,vi,m,exp(1)), "cluster"=cluster,
-              "finaldata"=finaldata, "call"=match.call(),"maxgeneration"=gen,"same"=same,"time"=proc.time()-ptm)
+              "validation"=index_fgwc(data,cluster,new_uij,vi,m,exp(1)), "cluster"=cluster,
+              "finaldata"=finaldata, "call"=match.call(),"iteration"=gen,"same"=same,"time"=proc.time()-ptm)
   print(c(order, ncluster,m, randomN))
   #result <- list(ifa=ifa,fgwc=fgwc)
+  class(ifa) <- 'fgwc'
   return (ifa)
 }
 
