@@ -63,8 +63,8 @@ abcfgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   cluster=finaldata[,ncol(finaldata)]
   print(c(order, ncluster,m, randomN))
   abc <- list("converg"=conv,"f_obj"=jfgwcv(data,food.finalpos,m,distance,order),"membership"=food.finalpos.other,"centroid"=food.finalpos,
-              "validasi"=index_fgwc(data,cluster,food.finalpos.other,food.finalpos,m,exp(1)), "cluster"=cluster,
-              "finaldata"=finaldata, "call"=match.call(),"maxgeneration"=iter,"same"=same,"time"=proc.time()-ptm)
+              "validation"=index_fgwc(data,cluster,food.finalpos.other,food.finalpos,m,exp(1)), "cluster"=cluster,
+              "finaldata"=finaldata, "call"=match.call(),"iteration"=iter,"same"=same,"time"=proc.time()-ptm)
   return(abc)
 }
 
