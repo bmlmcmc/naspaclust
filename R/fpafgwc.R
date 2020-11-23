@@ -1,6 +1,6 @@
 fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1,
 					error=1e-5, max.iter=100, randomN=0, vi.dist="uniform", nflow=10, p=0.8, gamma=1, lambda=1.5, delta=0,
-          ei.distr='normal', flow.same=10,flow.maxiter=100,r=4,m.chaotic=0.7,skew=0,sca=1){
+          ei.distr='normal', flow.same=10,r=4,m.chaotic=0.7,skew=0,sca=1){
   require(stabledist)
   randomnn <- randomN
   ptm<-proc.time()
@@ -58,8 +58,9 @@ fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   cluster=finaldata[,ncol(finaldata)]
   print(c(order, ncluster,m, randomN))
   fpa <- list("converg"=conv,"f_obj"=jfgwcv(data,flow.finalpos,m,distance,order),"membership"=flow.finalpos.other,"centroid"=flow.finalpos,
-              "validasi"=index_fgwc(data,cluster,flow.finalpos.other,flow.finalpos,m,exp(1)), "cluster"=cluster,
-              "finaldata"=finaldata, "call"=match.call(),"maxgeneration"=iter,"same"=same,"time"=proc.time()-ptm)
+              "validation"=index_fgwc(data,cluster,flow.finalpos.other,flow.finalpos,m,exp(1)), "cluster"=cluster,
+              "finaldata"=finaldata, "call"=match.call(),"iteration"=iter,"same"=same,"time"=proc.time()-ptm)
+  class(fpa) <- 'fgwc'
   return(fpa)
 }
 
