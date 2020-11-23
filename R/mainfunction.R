@@ -57,15 +57,16 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
                       alpha=alpha, a=a, b=b, error=error,max.iter=max.iter, randomN=randomN,
                       vi.dist=vi.dist, nflow=npar, p=opt_param['p'], gamma=opt_param['gamma'], 
                       lambda=opt_param['lambda'], delta=opt_param['delta'],
-                      ei.distr=et.distr,flow.same=same,r=chaos,m.chaotic=map,skew=skew,sca=sca))
+                      ei.distr=ei.distr,flow.same=same,r=chaos,m.chaotic=map,skew=skew,sca=sca))
     }
     else if(algorithm=='hho'){
         opt_param <- get_param_hho(opt_param)
+        print(as.numeric(opt_param[c('a1','a2','a3')]))
         return(hhofgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
                       alpha=alpha, a=a, b=b, error=error,max.iter=max.iter, randomN=randomN,
                       vi.dist=vi.dist,nhh=npar,hh.alg=opt_param['algo'],
                       A=as.numeric(opt_param[c('a1','a2','a3')]),p=as.numeric(opt_param['p']),
-                      hh.same=same,levy.beta=as.numeric(opt_param['beta']),as.numeric(opt_param['update.type'])))
+                      hh.same=same,levy.beta=as.numeric(opt_param['beta']),update.type=as.numeric(opt_param['update_type'])))
     }
     else if(algorithm=='ifa'){
         opt_param <- get_param_ifa(opt_param)
@@ -120,7 +121,7 @@ get_param_hho <- function(param){
     if(is.na(param['a2'])|param['a2']<0) param['a2'] <- 1
     if(is.na(param['a3'])|param['a3']<0) param['a3'] <- 0.5
     if(is.na(param['p'])|param['p']<0|param['p']>1) param['p'] <- 0.5
-    if(is.na(param['beta'])|param['beta']<0) param['gamma'] <- 1
+    if(is.na(param['beta'])|param['beta']<0) param['beta'] <- 1.5
     if(is.na(param['update_type'])|param['update_type']<5) param['update_type'] <- 5
     return(param)
 }
