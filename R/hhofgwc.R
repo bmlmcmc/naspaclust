@@ -1,6 +1,6 @@
 hhofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",nhh=10,hh.alg='heidari',
-          A=c(2,1,0.5),p=0.5,hh.maxiter=200,hh.same=10,levy.beta=1.5,update.type=5){
+          A=c(2,1,0.5),p=0.5,hh.same=10,levy.beta=1.5,update.type=5){
   require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
@@ -72,8 +72,9 @@ hhofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   cluster=finaldata[,ncol(finaldata)]
   print(c(order, ncluster,m, randomN))
   hho <- list("converg"=conv,"f_obj"=jfgwcv(data,hh.finalpos,m,distance,order),"membership"=hh.finalpos.other,"centroid"=hh.finalpos,
-              "validasi"=index_fgwc(data,cluster,hh.finalpos.other,hh.finalpos,m,exp(1)), "cluster"=cluster,
-              "finaldata"=finaldata, "call"=match.call(),"maxgeneration"=iter,"same"=same,"time"=proc.time()-ptm)
+              "validation"=index_fgwc(data,cluster,hh.finalpos.other,hh.finalpos,m,exp(1)), "cluster"=cluster,
+              "finaldata"=finaldata, "call"=match.call(),"iteration"=iter,"same"=same,"time"=proc.time()-ptm)
+  class(hho) <- 'fgwc'
   return(hho)
 }
 
