@@ -67,8 +67,9 @@ tlbofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
   cluster=finaldata[,ncol(finaldata)]
   print(c(order, ncluster,m, randomN))
   tlbo <- list("converg"=conv,"f_obj"=jfgwcv(data,stud.finalpos,m,distance,order),"membership"=stud.finalpos.other,"centroid"=stud.finalpos,
-              "validasi"=index_fgwc(data,cluster,stud.finalpos.other,stud.finalpos,m,exp(1)), "cluster"=cluster,
-              "finaldata"=finaldata, "call"=match.call(),"maxgeneration"=iter,"same"=same,"time"=proc.time()-ptm)
+              "validation"=index_fgwc(data,cluster,stud.finalpos.other,stud.finalpos,m,exp(1)), "cluster"=cluster,
+              "finaldata"=finaldata, "call"=match.call(),"iteration"=iter,"same"=same,"time"=proc.time()-ptm)
+  class(tlbo) <- 'fgwc'
   return(tlbo)
 }
 
