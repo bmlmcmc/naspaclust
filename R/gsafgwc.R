@@ -1,7 +1,71 @@
+#' Fuzzy Geographicaly Weighted Clustering with Gravitational Search Algorithm
+#' @description Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Gravitational Search Algorithm
+#' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
+#' @param pop an n*1 vector contains population.
+#' @param distmat an n*n distance matrix between regions.
+#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param m degree of fuzziness or fuzzifier. Default is 2.
+#' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
+#' @param order, minkowski order. default is 2.
+#' @param alpha the old membership effect with [0,1], if \code{alpha} equals 1, it will be same as fuzzy C-Means, if 0, it equals to neighborhood effect.
+#' @param a spatial magnitude of distance. Default is 1.
+#' @param b spatial magnitude of population. Default is 1.
+#' @param max.iter maximum iteration. Default is 500.
+#' @param error error tolerance. Default is 1e-5.
+#' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
+#' @param uij membership matrix initialisation.
+#' @param vi centroid matrix initialisation.
+#' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
+#' @param npar number of particle. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
+#' @param par.no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}. Default is 2
+#' @param par.dist The distance between particles. Can be defined as \code{par.dist=} in \code{opt_param}. Default is \code{'euclidean'}, 
+#' @param par.order The minkowski order of the \code{par.dist} if \code{par.dist='minkowski'}. Can be defined as \code{par.order=} in \code{opt_param}. Default is 2
+#' @param gsa.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
+#' @param G initial gravitatioal constant, Can be defined as \code{G} in \code{opt_param}. default is 1.
+#' @param vmax maximum velocity to be tolerated. Can be defined as \code{vmax} in \code{opt_param}. Default is 0.7
+#' @param new using the new algorithm by Li and Dong (2017). Can be defined as \code{new} in \code{opt_param}. Default is \code{FALSE}
+
+#' @return an object of class \code{'fgwc'}.\cr
+#' An \code{'fgwc'} object contains as follows:
+#' \itemize{
+#' \item \code{converg} - the process convergence of objective function
+#' \item \code{f_obj} - objective function value
+#' \item \code{membership} - membership matrix
+#' \item \code{centroid} - centroid matrix
+#' \item \code{validation} - validation indices (there are partition coefficient (\code{PC}), classification entropy (\code{CE}), 
+#' SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{XB}), IFV index (\code{IFV}), and Kwon index (Kwon))
+#' \item \code{max.iter} - Maximum iteration
+#' \item \code{cluster} - the cluster of the data
+#' \item \code{finaldata} - The final data (with the cluster)
+#' \item \code{call} - the syntax called previously
+#' \item \code{time} - computational time.
+#' }
+
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
+#' the Gravitational Search Algorithm was developed by Rashedi (2009) and the technique is also upgraded by Li and Dong (2017) in order to get a more optimal
+#' solution of a certain complex function.
+
+#' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}
+#' @examples
+#' data('census2010')
+#' data('census2010dist')
+#' data('census2010pop')
+#' # First way
+#' gsafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,npar=10)
+#' # Second way
+#' # initiate parameter
+#' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
+#'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
+#' ## tune the GSA parameter
+#' gsa_param <- c(vi.dist='normal',npar=5,same=15,G=1,vmax=0.7,new=F) 
+#' ##FGWC with GSA
+#' res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
+
+
 gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",npar=10,par.no=2,par.dist='euclidean', par.order=2,
-          gsa.same=10, G=1, g.type='sim.annealing',vmax=0.7, pso=F,
-          wmax=0.9,wmin=0.4,chaos=4,x0="F",map=0.7,ind=1,skew=0,sca=1){
+          gsa.same=10, G=1, vmax=0.7, new=F){
   require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
@@ -40,7 +104,7 @@ gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
     G <- G*runif(1,0.95,1)
     v <- force_v(par,par.no,G,v,vmax,par.dist,par.order,randomN)
     par.swarm <- lapply(1:npar, function (x) v[[x]] + par.swarm[[x]])
-    if(pso==T){
+    if(new==T){
       par.swarm <- lapply(1:npar,function(x) new.move(par.swarm[[x]],pbest[[x]],par.finalpos,randomN+x))
     }
     par.other <- lapply(1:npar, function(x) uij(data,par.swarm[[x]],m,distance,order))
@@ -48,7 +112,7 @@ gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   	par.swarm <- par$centroid <- lapply(1:npar, function(x) vi(data,par.other[[x]],m))
     par.fit <- par$I <- sapply(1:npar, function(x) jfgwcv(data,par.swarm[[x]],m,distance,order))
 
-    if(pso==T){ 
+    if(new==T){ 
       pbest.ind <- which(par.fit<pfit)
       if(length(pbest.ind)>0){
         for(i in pbest.ind){
@@ -104,7 +168,8 @@ force_v <- function(par,no,G,v,vmax,par.dist,par.order,randomN){
     Fi <- Reduce("+",Fij)
     a <- Fi/Mass[i]
     set.seed(randomN <- randomN+1)
-    rand <- matrix(runif(dd[1]*dd[2]),ncol=dd[2])
+    # rand <- matrix(runif(dd[1]*dd[2]),ncol=dd[2])
+    
     v1[[i]] <- rand*v1[[i]]+a
     # for(i in 1:nrow(v1[[i]])){
     #   v1[[i]][v1[[i]]< -vmax,] <- -vmax
@@ -124,24 +189,4 @@ new.move <- function(par,pbest,gbest,randomN){ ##Li dan Dong, 2017 GSA new techn
   c2 <- matrix(runif(dd[1]*dd[2], 0,1), ncol=dd[2])
   z <- sqrt(-2*log(c1))*cos(2*pi*c2)
   return(mu+sigma*z)
-}
-
-# weight candidate
-# constant, chaotic, simulated annealing, natural exp 1 2, exp decreasing
-update_inertia <- function(w.inert, wmax, wmin, z, iter, maxiter) {
-  if(w.inert=="constant") {
-    return(wmax)
-  }
-  else if(w.inert=="chaotic") {
-    return((wmax-wmin)*(1-iter/maxiter)+(wmax*z))
-  }
-  else if(w.inert=="sim.annealing") {
-    return(wmin+((wmax-wmin)*0.95^(iter-1)))
-  }
-  else if(w.inert=="nat.exponent1") {
-    return(wmin+((wmax-wmin)*exp(iter/(maxiter/10))))
-  }
-  else if(w.inert=="nat.exponent2") {
-    return(wmin+((wmax-wmin)*exp((iter/(maxiter/10)^2))))
-  }
 }

@@ -1,3 +1,74 @@
+#' Fuzzy Geographicaly Weighted Clustering
+#' @description Fuzzy clustering with addition of spatial configuration of membership matrix
+#' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
+#' @param pop an n*1 vector contains population.
+#' @param distmat an n*n distance matrix between regions.
+#' @param algorithm algorithm used for FGWC
+#' @param fgwc_param a vector that consists of FGWC parameter (see \code{\link{fgwcuv}} for parameter details)
+#' @param opt_param a vector that consists of optimization algorithm parameter (see \code{\link{fgwcuv}} for parameter details)
+
+
+#' @return an object of class \code{"fgwc"}.\cr
+#' An \code{"fgwc"} object contains as follows:
+#' \itemize{
+#' \item \code{converg} - the process convergence of objective function
+#' \item \code{f_obj} - objective function value
+#' \item \code{membership} - membership matrix
+#' \item \code{centroid} - centroid matrix
+#' \item \code{validation} - validation indices (there are partition coefficient (\code{PC}), classification entropy (\code{CE}), 
+#' SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{XB}), IFV index (\code{IFV}), and Kwon index (\code{Kwon}))
+#' \item \code{max.iter} - Maximum iteration
+#' \item \code{cluster} - the cluster of the data
+#' \item \code{finaldata} - The final data (with the cluster)
+#' \item \code{call} - the syntax called previously
+#' \item \code{time} - computational time.
+#' }
+
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. There are several algorithms currently
+#' provided in this package. The optimization algorithm uses the centroid as the parameter to be optimized. Here are the
+#' algorithm that can be used.
+#' \itemize{
+#' \item \code{"classic"} - The classical algorithm of FGWC based on Mason and Jacobson (2007) and Runkler and Katz (for membership optimization).
+#' \item \code{"abc"} - Optimization using artificial bee colony algorithm based on Karaboga and Basturk (2010).
+#' \item \code{"fpa"} - Optimization using flower pollination algorithm based on Yang (2012).
+#' \item \code{"gsa"} - Optimization using gravitational search algorithm based on Rashedi (2009) and Li and Dong (2017).
+#' \item \code{"hho"} - Optimization using harris-hawk optimization based on Bairathi (2018) and Heidari (2019). 
+#' \item \code{"ifa"} - Optimization using intelligent firefly algorithm based on Yang (2012) and Fateen and Bonilla-Petriciolet (2014).
+#' \item \code{"pso"} - Optimization using particle swarm optimization based on Kennedy and Eberhart (1996).
+#' \item \code{"tlbo"} - Optimization using teaching-learning based optimization based on Rao et al.(2012) and Rao and Patel (2012).
+#' }
+#' the default parameter of FGWC (in case you do not want to tune anything) is \cr \code{
+#' c(kind='u',ncluster=2,m=2,distance='euclidean',order=2,alpha=0.7,a=1,b=1,max.iter=500,error=1e-5,randomN=1)}.\cr
+#' There is also a universal parameter to the optimization algorithm as well as the details. The default parameter
+#' for the optimization algorithm is \cr
+#' \code{c(vi.dist='uniform',npar=10,par.no=2,par.dist='euclidean',par.order=2,pso=TRUE,
+#' same=10,type='sim.annealing',ei.distr='normal',vmax=0.7,wmax=0.9,wmin=0.4,
+#' chaos=4,x0='F',map=0.7,ind=1,skew=0,sca=1)} \cr
+#' If you do not define a certain parameter, the parameter will be set to its default value
+
+
+#' @seealso \code{\link{fgwcuv}},\code{\link{abcfgwc}},\code{\link{fpafgwc}},
+#' \code{\link{gsafgwc}},\code{\link{hhofgwc}},\code{\link{ifafgwc}},\code{\link{psofgwc}},\code{\link{tlbofgwc}}
+#' @examples
+#' data('census2010')
+#' data('census2010dist')
+#' data('census2010pop')
+#' # initiate parameter
+#' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
+#'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
+#' ## FGWC with classical algorithm
+#' res1 = fgwc(census2010,census2010pop,census2010dist,'classic',param_fgwc,1)
+#' ## tune the ABC parameter
+#' abc_param <- c(vi.dist='normal',npar=5,pso=FALSE,same=15,n.onlooker=5,limit=5) 
+#' ## FGWC with ABC optimization algorithm
+#' res2 = fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
+
+#param_opt <- c(vi.dist='normal',npar=5,par.no=2,par.dist='euclidean',par.order=2,pso=FALSE,
+#same=15,type='sim.annealing',ei.distr='normal',vmax=0.7,wmax=0.95,wmin=0.35,
+#chaos=4,x0='F',map=0.7,ind=1,skew=0,sca=1,n.onlooker=5,limit=5) ## tune the optimization algorithm, add no. of onlooker bee as abc parameter
+
+
 fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
     if (!fgwc_param['kind']%in%c('u','v','NA')) kind <- NA else kind <- fgwc_param['kind']
     if (is.na(fgwc_param['ncluster'])|fgwc_param['ncluster']<2) ncluster <- 2 else ncluster <- as.numeric(fgwc_param['ncluster'])
@@ -41,23 +112,22 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
         return(abcfgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
                       alpha=alpha, a=a, b=b, error=error,max.iter=max.iter, randomN=randomN, vi.dist=vi.dist, 
                       nfood=npar, n.onlooker=as.numeric(opt_param['n.onlooker']), 
-                      limit=opt_param['limit'], pso=pso, abc.same=same))
+                      limit=as.numeric(opt_param['limit']), pso=pso, abc.same=same))
+    }
+    else if(algorithm=='fpa'){
+        opt_param <- get_param_fpa(opt_param)
+        return(fpafgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
+                      alpha=alpha, a=a, b=b, error=error,max.iter=max.iter, randomN=randomN,
+                      vi.dist=vi.dist, nflow=npar, p=as.numeric(opt_param['p']), gamma=as.numeric(opt_param['gamma']), 
+                      lambda=as.numeric(opt_param['lambda']), delta=as.numeric(opt_param['delta']),
+                      ei.distr=ei.distr,flow.same=same,r=chaos,m.chaotic=map,skew=skew,sca=sca))
     }
     else if(algorithm=='gsa'){
         opt_param <- get_param_gsa(opt_param)
         return(gsafgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
                       alpha=alpha, a=a, b=b, error=error,max.iter=max.iter,randomN=randomN,
                       vi.dist=vi.dist,npar=npar,par.no=par.no,par.dist=par.dist, par.order=par.order,
-                      gsa.same=same, G=opt_param['G'], g.type=type,vmax=vmax, pso=pso,wmax=wmax,wmin=wmin,
-                      chaos=chaos,x0=x0,map=map,ind=ind,skew=skew,sca=sca))
-    }
-    else if(algorithm=='fpa'){
-        opt_param <- get_param_fpa(opt_param)
-        return(fpafgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
-                      alpha=alpha, a=a, b=b, error=error,max.iter=max.iter, randomN=randomN,
-                      vi.dist=vi.dist, nflow=npar, p=opt_param['p'], gamma=opt_param['gamma'], 
-                      lambda=opt_param['lambda'], delta=opt_param['delta'],
-                      ei.distr=ei.distr,flow.same=same,r=chaos,m.chaotic=map,skew=skew,sca=sca))
+                      gsa.same=same, G=opt_param['G'], vmax=vmax, new=as.logical(opt_param['new'])))
     }
     else if(algorithm=='hho'){
         opt_param <- get_param_hho(opt_param)
@@ -98,51 +168,60 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
 }
 
 get_param_abc <- function(param){
-    if(is.na(param['n.onlooker'])|param['n.onlooker']<0) param['n.onlooker'] <- 5
-    if(is.na(param['limit'])|param['limit']<0) param['limit'] <- 4
-    return (param)
-}
-get_param_gsa <- function(param){
-    if(is.na(param['G'])|param['G']<0) param['G'] <- 1
-    return(param)
+    paramx <- c()
+    if(is.na(param['n.onlooker'])|param['n.onlooker']<0) paramx['n.onlooker'] <- 5 else paramx['n.onlooker'] <- param['n.onlooker']
+    if(is.na(param['limit'])|param['limit']<0) paramx['limit'] <- 4 else paramx['limit'] <- param['limit']
+    return(as.numeric(paramx))
 }
 
 get_param_fpa <- function(param){
-    if(is.na(param['p'])|param['p']<0|param['p']>1) param['p'] <- 0.8
-    if(is.na(param['gamma'])|param['gamma']<0) param['gamma'] <- 1
-    if(is.na(param['lambda'])|param['lambda']<0) param['lambda'] <- 1.5
-    if(is.na(param['delta'])|param['delta']<0) param['delta'] <- 0
-    return(param)
+    paramx <- c()
+    if(is.na(param['p'])|param['p']<0|param['p']>1) paramx['p'] <- 0.8 else paramx['p'] <- param['p']
+    if(is.na(param['gamma'])|param['gamma']<0) paramx['gamma'] <- 1 else paramx['gamma'] <- param['gamma']
+    if(is.na(param['lambda'])|param['lambda']<0) paramx['lambda'] <- 1.5 else paramx['lambda'] <- param['lambda'] 
+    if(is.na(param['delta'])|param['delta']<0) paramx['delta'] <- 0 else paramx['delta'] <- param['delta']
+    return(paramx)
+}
+
+get_param_gsa <- function(param){
+    paramx <- c()
+    if(is.na(param['G'])|param['G']<0) paramx['G'] <- 1 else paramx['G'] <- param['G']
+    if(is.na(param['new'])|!param['new']%in%c(0,1)) paramx['new'] <- TRUE else paramx['new'] <- param['new']
+    return(as.numeric(paramx))
 }
 
 get_param_hho <- function(param){
-    if(is.na(param['algo'])|param['algo']<0) param['algo'] <- 'heidari'
-    if(is.na(param['a1'])|param['a1']<0) param['a1'] <- 2
-    if(is.na(param['a2'])|param['a2']<0) param['a2'] <- 1
-    if(is.na(param['a3'])|param['a3']<0) param['a3'] <- 0.5
-    if(is.na(param['p'])|param['p']<0|param['p']>1) param['p'] <- 0.5
-    if(is.na(param['beta'])|param['beta']<0) param['beta'] <- 1.5
-    if(is.na(param['update_type'])|param['update_type']<5) param['update_type'] <- 5
-    return(param)
+    paramx <- c()
+    if(is.na(param['algo'])|!param['algo']%in%c('heidari','bairathi')) paramx['algo'] <- 'heidari' else paramx['algo'] <- param['algo']
+    if(is.na(param['a1'])|param['a1']<0) paramx['a1'] <- 2 else paramx['a1'] <- param['a1']
+    if(is.na(param['a2'])|param['a2']<0) paramx['a2'] <- 1 else paramx['a2'] <- param['a2']
+    if(is.na(param['a3'])|param['a3']<0) paramx['a3'] <- 0.5 else paramx['a3'] <- param['a3']
+    if(is.na(param['p'])|param['p']<0|param['p']>1) paramx['p'] <- 0.5 else paramx['p'] <- param['p']
+    if(is.na(param['beta'])|param['beta']<0) paramx['beta'] <- 1.5 else paramx['beta'] <- param['beta']
+    if(is.na(param['update_type'])|param['update_type']<5) paramx['update_type'] <- 5 else paramx['update_type'] <- param['update_type']
+    return(paramx)
 }
 
 get_param_ifa <- function(param){
-    if(is.na(param['gamma'])|param['gamma']<0) param['gamma'] <- 1
-    if(is.na(param['beta'])|param['beta']<0) param['gamma'] <- 1
-    if(is.na(param['alpha'])|param['alpha']<0) param['alpha'] <- 1
-    if(is.na(param['update_type'])|param['update_type']<5) param['update_type'] <- 4
-    return(param)
+    paramx <- c()
+    if(is.na(param['gamma'])|param['gamma']<0) paramx['gamma'] <- 1 else paramx['gamma'] <- param['gamma']
+    if(is.na(param['beta'])|param['beta']<0) paramx['beta'] <- 1 else paramx['beta'] <- param['beta']
+    if(is.na(param['alpha'])|param['alpha']<0) paramx['alpha'] <- 1 else paramx['alpha'] <- param['alpha']
+    if(is.na(param['update_type'])|param['update_type']<5) paramx['update_type'] <- 4 else paramx['update_type'] <- param['update_type']
+    return(as.numeric(paramx))
 }
 
 get_param_pso <- function(param){
-    if(is.na(param['c1'])|param['c1']<0) param['c1'] <- 0.49
-    if(is.na(param['c2'])|param['c2']<0) param['c2'] <- 0.49
-    return(param)
+    paramx <- c()
+    if(is.na(param['c1'])|param['c1']<0) paramx['c1'] <- 0.49 else paramx['c1'] <- param['c1']
+    if(is.na(param['c2'])|param['c2']<0) paramx['c2'] <- 0.49 else paramx['c2'] <- param['c2']
+    return(as.numeric(paramx))
 }
 
 get_param_tlbo <- function(param){
-    if(is.na(param['nselection'])|param['nselection']<0) param['nselection'] <- 10
-    if(is.na(param['elitism'])|param['elitism']<0) param['elitism'] <- F
-    if(is.na(param['n.elite'])|param['n.elite']<0) param['n.elite'] <- 2
-    return(param)
+    paramx <- c()
+    if(is.na(param['nselection'])|param['nselection']<0) paramx['nselection'] <- 10 else paramx['nselection'] <- param['nselection']
+    if(is.na(param['elitism'])|param['elitism']<0) paramx['elitism'] <- F else paramx['elitism'] <- param['elitism']
+    if(is.na(param['n.elite'])|param['n.elite']<0) paramx['n.elite'] <- 2 else paramx['n.elite'] <- param['n.elite']
+    return(paramx)
 }

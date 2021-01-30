@@ -1,3 +1,77 @@
+#' Fuzzy Geographicaly Weighted Clustering with (Intelligent) Firefly Algorithm
+#' @description Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using (Intelligent) Firefly Algorithm.
+#' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
+#' @param pop an n*1 vector contains population.
+#' @param distmat an n*n distance matrix between regions.
+#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param m degree of fuzziness or fuzzifier. Default is 2.
+#' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
+#' @param order, minkowski order. default is 2.
+#' @param alpha the old membership effect with [0,1], if \code{alpha} equals 1, it will be same as fuzzy C-Means, if 0, it equals to neighborhood effect.
+#' @param a spatial magnitude of distance. Default is 1.
+#' @param b spatial magnitude of population. Default is 1.
+#' @param max.iter maximum iteration. Default is 500.
+#' @param error error tolerance. Default is 1e-5.
+#' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
+#' @param uij membership matrix initialisation.
+#' @param vi centroid matrix initialisation.
+#' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
+#' @param ei.distr distribution of random walk parameter. Can be defined as \code{ei.distr} in \code{opt_param}.
+#' @param fa.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
+#' @param nfly number of fireflies. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
+#' @param ffly.no The number of selected best fireflies for intelligent firefly algorithm. Can be defined as \code{par.no=} in \code{opt_param}. Default is 2
+#' @param ffly.dist The distance between fireflies. Can be defined as \code{par.dist=} in \code{opt_param}. Default is \code{'euclidean'}, 
+#' @param ffly.order The minkowski order of the \code{par.dist} if \code{par.dist='minkowski'}. Can be defined as \code{par.order=} in \code{opt_param}. Default is 2
+#' @param gamma Step size scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.
+#' @param ffly.beta . Can be defined as \code{beta} in \code{opt_param}. Default is 1.
+#' @param ffly.alpha number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.
+#' @param r.chaotic weight in logistic chaotic between [0,4]. Can be used when \code{ei.distr='logchaotic'}. Can be defined as \code{chaos} in \code{opt_param}. Default is 4.
+#' @param m.chaotic mapping parameter in kent chaotic between [0,1]. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.7.
+#' @param ind.levy Levy distribution index for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{ind} in \code{opt_param}. Default is 1.
+#' @param skew.levy Levy distribution skewness for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{skew} in \code{opt_param}. Default is 0.
+#' @param scale.levy Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}. Default is 1.
+#' @param ffly.alpha.type An integer. The type of \code{ffly.alpha} update. Can be selected from 1 to 5 Can be defined as \code{update_type} in \code{opt_param}. Default is 4.
+
+#' @return an object of class \code{'fgwc'}.\cr
+#' An \code{'fgwc'} object contains as follows:
+#' \itemize{
+#' \item \code{converg} - the process convergence of objective function
+#' \item \code{f_obj} - objective function value
+#' \item \code{membership} - membership matrix
+#' \item \code{centroid} - centroid matrix
+#' \item \code{validation} - validation indices (there are partition coefficient (\code{PC}), classification entropy (\code{CE}), 
+#' SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{XB}), IFV index (\code{IFV}), and Kwon index (Kwon))
+#' \item \code{max.iter} - Maximum iteration
+#' \item \code{cluster} - the cluster of the data
+#' \item \code{finaldata} - The final data (with the cluster)
+#' \item \code{call} - the syntax called previously
+#' \item \code{time} - computational time.
+#' }
+
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
+#' the Firefly Algorithm was developed by Yang (2012) and the technique is also upgraded by Fateen and Bonilla-Petriciolet (2014) in order to get a more optimal
+#' solution of a certain complex function.
+
+#' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}
+#' @examples
+#' data('census2010')
+#' data('census2010dist')
+#' data('census2010pop')
+#' # First way
+#' ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
+#' # Second way
+#' # initiate parameter
+#' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
+#'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
+#' ## tune the IFA parameter
+#' ifa_param <- c(vi.dist='uniform', ei.distr='logchaotic',
+#'						fa.same=10, nfly=15, ffly.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
+#'           ffly.alpha=1, r.chaotic=4,ffly.alpha.type=4) 
+#' ##FGWC with IFA
+#' res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
+
+
 ########################################################
 #############INTELLIGENT FIREFLY ALGORITHM##############
 ########################################################

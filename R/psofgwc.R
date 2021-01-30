@@ -1,3 +1,75 @@
+#' Fuzzy Geographicaly Weighted Clustering with Particle Swarm Optimization
+#' @description Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Particle Swarm Algorithm.
+#' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
+#' @param pop an n*1 vector contains population.
+#' @param distmat an n*n distance matrix between regions.
+#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param m degree of fuzziness or fuzzifier. Default is 2.
+#' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
+#' @param order, minkowski order. default is 2.
+#' @param alpha the old membership effect with [0,1], if \code{alpha} equals 1, it will be same as fuzzy C-Means, if 0, it equals to neighborhood effect.
+#' @param a spatial magnitude of distance. Default is 1.
+#' @param b spatial magnitude of population. Default is 1.
+#' @param max.iter maximum iteration. Default is 500.
+#' @param error error tolerance. Default is 1e-5.
+#' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
+#' @param uij membership matrix initialisation.
+#' @param vi centroid matrix initialisation.
+#' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
+#' @param npar number of particles. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
+#' @param vmax maximum velocity to be tolerated. Can be defined as \code{vmax} in \code{opt_param}. Default is 0.7
+#' @param pso.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
+#' @param c1 Cognitive scaling parameters. Can be defined as \code{c1=} in \code{opt_param}. Default is 0.49
+#' @param c2 Social scaling parameters. Can be defined as \code{c2=} in \code{opt_param}. Default is 0.49, 
+#' @param w.inert The inertia weight update method between \code{'constant','chaotic','sim.annealing','nat.exponent1','nat.exponent2'} based on Bansal (2011). 
+#' Can be defined as \code{type=} in \code{opt_param}. Default is \code{'sim.annealing'}
+#' @param wmax Maximum inertia weight. Can be defined as \code{wmax} in \code{opt_param}. Default is 0.9.
+#' @param wmin Minimum inertia weight. Can be defined as \code{wmin} in \code{opt_param}. Default is 0.4.
+#' @param chaos weight in logistic chaotic between [0,4]. Can be used when \code{ei.distr='logchaotic'}. Can be defined as \code{chaos} in \code{opt_param}. Default is 4.
+#' @param x0 whether the chaotic use initialization. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is \code{'F'}.
+#' @param map mapping parameter in kent chaotic between [0,1]. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.7.
+#' @param ind Levy distribution index for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{ind} in \code{opt_param}. Default is 1.
+#' @param skew Levy distribution skewness for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{skew} in \code{opt_param}. Default is 0.
+#' @param sca Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}. Default is 1.
+
+#' @return an object of class \code{'fgwc'}.\cr
+#' An \code{'fgwc'} object contains as follows:
+#' \itemize{
+#' \item \code{converg} - the process convergence of objective function
+#' \item \code{f_obj} - objective function value
+#' \item \code{membership} - membership matrix
+#' \item \code{centroid} - centroid matrix
+#' \item \code{validation} - validation indices (there are partition coefficient (\code{PC}), classification entropy (\code{CE}), 
+#' SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{XB}), IFV index (\code{IFV}), and Kwon index (Kwon))
+#' \item \code{max.iter} - Maximum iteration
+#' \item \code{cluster} - the cluster of the data
+#' \item \code{finaldata} - The final data (with the cluster)
+#' \item \code{call} - the syntax called previously
+#' \item \code{time} - computational time.
+#' }
+
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
+#' the Particle Swarm Optimization was developed by Kennedy and Eberhart (1996) in order to get a more optimal solution of a certain complex function.
+
+#' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}
+#' @examples
+#' data('census2010')
+#' data('census2010dist')
+#' data('census2010pop')
+#' # First way
+#' ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
+#' # Second way
+#' # initiate parameter
+#' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
+#'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
+#' ## tune the PSO parameter
+#' PSO_param <- c(vi.dist='uniform',npar=15,
+#'          vmax=0.8, pso.same=10, c1=0.7, c2=0.6, w.inert='chaotic',
+#'                      wmax=0.8,wmin=0.3)
+#' ##FGWC with PSO
+#' res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,pso_param)
+
 psofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",npar=10,
           vmax=0.7, pso.same=10, c1=0.49, c2=0.49, w.inert='sim.annealing',
