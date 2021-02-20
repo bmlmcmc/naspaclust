@@ -73,7 +73,7 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
     if (!fgwc_param['kind']%in%c('u','v','NA')) kind <- NA else kind <- fgwc_param['kind']
     if (is.na(fgwc_param['ncluster'])|fgwc_param['ncluster']<2) ncluster <- 2 else ncluster <- as.numeric(fgwc_param['ncluster'])
     if ((is.na(fgwc_param['m'])|fgwc_param['m']<1)) m <- 2 else m <- as.numeric(fgwc_param['m'])
-    if ((is.na(fgwc_param['distance']))) distance <- 'euclidean' else distance <- as.numeric(fgwc_param['distance'])
+    if ((is.na(fgwc_param['distance']))) distance <- 'euclidean' else distance <- fgwc_param['distance']
     if ((is.na(fgwc_param['order'])|fgwc_param['order']<=0)) order <- 2 else order <- as.numeric(fgwc_param['order'])
     if ((is.na(fgwc_param['alpha'])|fgwc_param['alpha']>1|fgwc_param['alpha']<0)) alpha <- 0.7 else alpha <- as.numeric(fgwc_param['alpha'])
     if ((is.na(fgwc_param['a'])|fgwc_param['a']<0)) a <- 1 else a <- as.numeric(fgwc_param['a'])
@@ -124,10 +124,11 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
     }
     else if(algorithm=='gsa'){
         opt_param <- get_param_gsa(opt_param)
+        print(opt_param)
         return(gsafgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
                       alpha=alpha, a=a, b=b, error=error,max.iter=max.iter,randomN=randomN,
                       vi.dist=vi.dist,npar=npar,par.no=par.no,par.dist=par.dist, par.order=par.order,
-                      gsa.same=same, G=opt_param['G'], vmax=vmax, new=as.logical(opt_param['new'])))
+                      gsa.same=same, G=as.numeric(opt_param['G']), vmax=vmax, new=as.logical(opt_param['new'])))
     }
     else if(algorithm=='hho'){
         opt_param <- get_param_hho(opt_param)
@@ -140,6 +141,7 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
     }
     else if(algorithm=='ifa'){
         opt_param <- get_param_ifa(opt_param)
+        print(opt_param)
         return(ifafgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
                       alpha=alpha, a=a, b=b, error=error,max.iter=max.iter, randomN=randomN,
                       vi.dist=vi.dist, ei.distr=ei.distr,fa.same=same, nfly=npar, ffly.no=par.no, 
@@ -186,8 +188,8 @@ get_param_fpa <- function(param){
 get_param_gsa <- function(param){
     paramx <- c()
     if(is.na(param['G'])|param['G']<0) paramx['G'] <- 1 else paramx['G'] <- param['G']
-    if(is.na(param['new'])|!param['new']%in%c(0,1)) paramx['new'] <- TRUE else paramx['new'] <- param['new']
-    return(as.numeric(paramx))
+    if(is.na(param['new'])|!param['new']%in%c(0,1)) paramx['new'] <- TRUE else paramx['new'] <- as.logical(param['new'])
+    return(paramx)
 }
 
 get_param_hho <- function(param){
@@ -208,14 +210,14 @@ get_param_ifa <- function(param){
     if(is.na(param['beta'])|param['beta']<0) paramx['beta'] <- 1 else paramx['beta'] <- param['beta']
     if(is.na(param['alpha'])|param['alpha']<0) paramx['alpha'] <- 1 else paramx['alpha'] <- param['alpha']
     if(is.na(param['update_type'])|param['update_type']<5) paramx['update_type'] <- 4 else paramx['update_type'] <- param['update_type']
-    return(as.numeric(paramx))
+    return(paramx)
 }
 
 get_param_pso <- function(param){
     paramx <- c()
     if(is.na(param['c1'])|param['c1']<0) paramx['c1'] <- 0.49 else paramx['c1'] <- param['c1']
     if(is.na(param['c2'])|param['c2']<0) paramx['c2'] <- 0.49 else paramx['c2'] <- param['c2']
-    return(as.numeric(paramx))
+    return(paramx)
 }
 
 get_param_tlbo <- function(param){

@@ -140,7 +140,7 @@ pollination <- function(flow,p,pollen,gamma,lambda,delta,seed,ei.distr,r,m,ind,s
       flow[[x]]+gamma*matrix(rstable(dd[1]*dd[2],lambda,skew,sca,delta),ncol=dd[2])*(pollen-flow[[x]])
     }
     else{ ##local pollination
-      ei <- matrix(eiDist(ei.distr,dd[1]*dd[2],seed+x,r,m,lambda,skew,sca),ncol=dd[2])
+      ei <- matrix(eiDist(ei.distr,dd[1]*dd[2],seed+2,r,m,lambda,skew,sca),ncol=dd[2])
       no <- 1:length(flow)
       sample <- sample(no[-x],2)
       a = sample[1]

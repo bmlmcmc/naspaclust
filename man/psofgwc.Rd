@@ -133,7 +133,7 @@ ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 ## tune the PSO parameter
-PSO_param <- c(vi.dist='uniform',npar=15,
+pso_param <- c(vi.dist='uniform',npar=15,
          vmax=0.8, pso.same=10, c1=0.7, c2=0.6, w.inert='chaotic',
                      wmax=0.8,wmin=0.3)
 ##FGWC with PSO

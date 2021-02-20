@@ -138,7 +138,7 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 ## tune the IFA parameter
 ifa_param <- c(vi.dist='uniform', ei.distr='logchaotic',
 					fa.same=10, nfly=15, ffly.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
-          ffly.alpha=1, r.chaotic=4,ffly.alpha.type=4) 
+          ffly.alpha=1, r.chaotic=4,update_type=4) 
 ##FGWC with IFA
 res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
 }
