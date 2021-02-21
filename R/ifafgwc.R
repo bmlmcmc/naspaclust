@@ -22,15 +22,15 @@
 #' @param ffly.no The number of selected best fireflies for intelligent firefly algorithm. Can be defined as \code{par.no=} in \code{opt_param}. Default is 2
 #' @param ffly.dist The distance between fireflies. Can be defined as \code{par.dist=} in \code{opt_param}. Default is \code{'euclidean'}, 
 #' @param ffly.order The minkowski order of the \code{par.dist} if \code{par.dist='minkowski'}. Can be defined as \code{par.order=} in \code{opt_param}. Default is 2
-#' @param gamma Step size scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.
-#' @param ffly.beta . Can be defined as \code{beta} in \code{opt_param}. Default is 1.
+#' @param gamma distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.
+#' @param ffly.beta . attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.
 #' @param ffly.alpha number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.
 #' @param r.chaotic weight in logistic chaotic between [0,4]. Can be used when \code{ei.distr='logchaotic'}. Can be defined as \code{chaos} in \code{opt_param}. Default is 4.
 #' @param m.chaotic mapping parameter in kent chaotic between [0,1]. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.7.
 #' @param ind.levy Levy distribution index for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{ind} in \code{opt_param}. Default is 1.
 #' @param skew.levy Levy distribution skewness for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{skew} in \code{opt_param}. Default is 0.
 #' @param scale.levy Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}. Default is 1.
-#' @param ffly.alpha.type An integer. The type of \code{ffly.alpha} update. Can be selected from 1 to 5 Can be defined as \code{update_type} in \code{opt_param}. Default is 4.
+#' @param ffly.alpha.type An integer. The type of \code{ffly.alpha} update. Can be selected from 1 to 5. Can be defined as \code{update_type} in \code{opt_param}. Default is 4.
 
 #' @return an object of class \code{'fgwc'}.\cr
 #' An \code{'fgwc'} object contains as follows:

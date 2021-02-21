@@ -75,9 +75,9 @@ ifafgwc(
 
 \item{ffly.order}{The minkowski order of the \code{par.dist} if \code{par.dist='minkowski'}. Can be defined as \code{par.order=} in \code{opt_param}. Default is 2}
 
-\item{gamma}{Step size scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.}
+\item{gamma}{distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.}
 
-\item{ffly.beta}{. Can be defined as \code{beta} in \code{opt_param}. Default is 1.}
+\item{ffly.beta}{. attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.}
 
 \item{ffly.alpha}{number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.}
 
@@ -91,7 +91,7 @@ ifafgwc(
 
 \item{scale.levy}{Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}. Default is 1.}
 
-\item{ffly.alpha.type}{An integer. The type of \code{ffly.alpha} update. Can be selected from 1 to 5 Can be defined as \code{update_type} in \code{opt_param}. Default is 4.}
+\item{ffly.alpha.type}{An integer. The type of \code{ffly.alpha} update. Can be selected from 1 to 5. Can be defined as \code{update_type} in \code{opt_param}. Default is 4.}
 
 \item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
 

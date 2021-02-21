@@ -173,7 +173,7 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
         opt_param <- get_param_tlbo(opt_param)
         return(tlbofgwc(data, pop, distmat, ncluster=ncluster, m=m, distance=distance, order=order,
                       alpha=alpha, a=a, b=b, error=error,max.iter=max.iter, randomN=randomN,
-                      vi.dist=vi.dist,nstud=npar,vmax=vmax, tlbo.same=same,
+                      vi.dist=vi.dist,nstud=npar,tlbo.same=same,
                       nselection=as.numeric(opt_param['nselection']),
                       elitism=as.logical(opt_param['elitism']),n.elite=as.numeric(opt_param['n.elite'])))
     }

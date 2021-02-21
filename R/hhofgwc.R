@@ -18,10 +18,10 @@
 #' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
 #' @param nhh number of harris-hawk eagles. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
 #' @param hh.alg String between default is \code{'heidari'} and default is \code{'bairathi'}. The algorithm for HHO, Can be defined as \code{algo} in \code{opt_param}. default is \code{'heidari'}.
-#' @param A a 3 vectors which represents initial energy and cut-off for exploitation and exploration. In \code{opt_param}, they can be defined as \code{'a1'} for initial energy, \code{'a2'} for exploitation cut-off and \code{'a3'} for exploration cut-off respectively. default is c(2,1,0.5).
+#' @param A a 3 vectors which represents initial energy and cut-off for exploitation and exploration. In \code{opt_param}, they can be defined as \code{'a1'} for initial energy, \code{'a2'} for exploitation cut-off and \code{'a3'} for exploration cut-off respectively. default is \code{c("a1"=2,"a2"=1,"a3"=0.5)}.
 #' @param hh.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
 #' @param levy.beta The skewness of levy flight. Can be defined as \code{beta} in \code{opt_param}. Default is 1.5
-#' @param update.type An integer. The type of energy \code{A[1]} update. Can be selected from 1 to 5 Can be defined as \code{new} in \code{opt_param}. Default is 5.
+#' @param update.type An integer. The type of energy \code{A[1]} update. Can be selected from 1 to 5. Can be defined as \code{update.type} in \code{opt_param}. Default is 5.
 
 #' @return an object of class \code{'fgwc'}.\cr
 #' An \code{'fgwc'} object contains as follows:

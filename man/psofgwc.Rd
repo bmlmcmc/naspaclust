@@ -26,13 +26,7 @@ psofgwc(
   c2 = 0.49,
   w.inert = "sim.annealing",
   wmax = 0.9,
-  wmin = 0.4,
-  chaos = 4,
-  x0 = "F",
-  map = 0.7,
-  ind = 1,
-  skew = 0,
-  sca = 1
+  wmin = 0.4
 )
 }
 \arguments{
@@ -78,18 +72,6 @@ Can be defined as \code{type=} in \code{opt_param}. Default is \code{'sim.anneal
 \item{wmax}{Maximum inertia weight. Can be defined as \code{wmax} in \code{opt_param}. Default is 0.9.}
 
 \item{wmin}{Minimum inertia weight. Can be defined as \code{wmin} in \code{opt_param}. Default is 0.4.}
-
-\item{chaos}{weight in logistic chaotic between [0,4]. Can be used when \code{ei.distr='logchaotic'}. Can be defined as \code{chaos} in \code{opt_param}. Default is 4.}
-
-\item{x0}{whether the chaotic use initialization. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is \code{'F'}.}
-
-\item{map}{mapping parameter in kent chaotic between [0,1]. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.7.}
-
-\item{ind}{Levy distribution index for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{ind} in \code{opt_param}. Default is 1.}
-
-\item{skew}{Levy distribution skewness for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{skew} in \code{opt_param}. Default is 0.}
-
-\item{sca}{Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}. Default is 1.}
 
 \item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
 

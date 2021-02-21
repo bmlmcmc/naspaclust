@@ -20,7 +20,6 @@ tlbofgwc(
   randomN = 0,
   vi.dist = "uniform",
   nstud = 10,
-  vmax = 0.4,
   tlbo.same = 10,
   nselection = 10,
   elitism = F,
@@ -56,11 +55,9 @@ tlbofgwc(
 
 \item{nstud}{number of students. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.}
 
-\item{vmax}{maximum velocity to be tolerated. Can be defined as \code{vmax} in \code{opt_param}. Default is 0.7.}
-
 \item{tlbo.same}{number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}. Default is 10.}
 
-\item{nselection}{number of selected student. Can be defined as \code{nselection=} in \code{opt_param}. Default is equal to \code{nstud}.}
+\item{nselection}{number of teachers based on selected students. Can be defined as \code{nselection=} in \code{opt_param}. Default is equal to \code{nstud}.}
 
 \item{elitism}{wheter to use elitism algorithm or not. Either \code{TRUE} or \code{FALSE}. Can be defined as \code{elitism=} in \code{opt_param}. Default is \code{FALSE}.}
 
@@ -109,7 +106,7 @@ ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 ## tune the TLBO parameter
-tlbo_param <- c(vi.dist="uniform",nstud=10,vmax=0.4, tlbo.same=10,
+tlbo_param <- c(vi.dist="uniform",nstud=10, tlbo.same=10,
          nselection=10,elitism=F,n.elite=2)
 ##FGWC with TLBO
 res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,tlbo_param)

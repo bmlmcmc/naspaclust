@@ -59,13 +59,13 @@ hhofgwc(
 
 \item{hh.alg}{String between default is \code{'heidari'} and default is \code{'bairathi'}. The algorithm for HHO, Can be defined as \code{algo} in \code{opt_param}. default is \code{'heidari'}.}
 
-\item{A}{a 3 vectors which represents initial energy and cut-off for exploitation and exploration. In \code{opt_param}, they can be defined as \code{'a1'} for initial energy, \code{'a2'} for exploitation cut-off and \code{'a3'} for exploration cut-off respectively. default is c(2,1,0.5).}
+\item{A}{a 3 vectors which represents initial energy and cut-off for exploitation and exploration. In \code{opt_param}, they can be defined as \code{'a1'} for initial energy, \code{'a2'} for exploitation cut-off and \code{'a3'} for exploration cut-off respectively. default is \code{c("a1"=2,"a2"=1,"a3"=0.5)}.}
 
 \item{hh.same}{number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.}
 
 \item{levy.beta}{The skewness of levy flight. Can be defined as \code{beta} in \code{opt_param}. Default is 1.5}
 
-\item{update.type}{An integer. The type of energy \code{A[1]} update. Can be selected from 1 to 5 Can be defined as \code{new} in \code{opt_param}. Default is 5.}
+\item{update.type}{An integer. The type of energy \code{A[1]} update. Can be selected from 1 to 5. Can be defined as \code{update.type} in \code{opt_param}. Default is 5.}
 
 \item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
 
