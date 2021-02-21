@@ -75,8 +75,10 @@ SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{
 Fuzzy clustering with addition of spatial configuration of membership matrix
 }
 \details{
-Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
-neighborhood effects and population to configure the membership matrix in Fuzzy C-Means.
+Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
+neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. There are two kinds of options in doing classical FGWC.
+The first is using \code{"u"} \insertCite{Runkler2006}{naspaclust} (default) for membership optimization 
+and \code{"v"} \insertCite{fgwc}{naspaclust} for centroid optimisation.
 }
 \examples{
 data('census2010')
@@ -84,6 +86,9 @@ data('census2010dist')
 data('census2010pop')
 fgwcuv(census2010,census2010pop,census2010dist,'u',3,2,'euclidean',4)
 
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 \code{\link{fpafgwc,ifafgwc}}

@@ -2,10 +2,16 @@ Package: naspaclust
 Type: Package
 Title: Nature-Inspired Spatial Clustering
 Version: 0.1.0
+Authors@R: c(person(given = "Bahrul Ilmi",      family = "Nasution",    role = c("aut", "cre"), email = c("bahrulnst@gmail.com","14.8034@stis.ac.id")),
+            person(given = "Robert",      family = "Kurniawan",    role = "aut", email = "robertk@stis.ac.id"))
+Depends: rdist, stabledist, beepr
+Suggests: ppclust, spatialClust, cluster, ggplot
+Imports: Rdpack
+RdMacros: Rdpack
 Author: Bahrul Ilmi Nasution, Robert Kurniawan
 Maintainer: Bahrul Ilmi Nasution <bahrulnst@gmail.com>
-Description: This package consists of the Spatial Clustering with addition of nature-inspired optimization algorithm.
-License: What license is it under?
+Description: This package consists of the Spatial Clustering using Fuzzy Geographically Weighted Clustering improved with nature-inspired optimization algorithm.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

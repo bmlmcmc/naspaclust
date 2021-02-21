@@ -37,10 +37,13 @@
 #' \item \code{call} - the syntax called previously
 #' \item \code{time} - computational time.
 #' }
-#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-#' the Artificial Bee Colony (ABC) algorithm was developed by Karaboga and Basturk (2009) in order to get a more optimal
-#' solution of a certain complex function.
+#' the Artificial Bee Colony (ABC) algorithm was developed by \insertCite{Karaboga2007;textual}{naspaclust} in order to get a more optimal
+#' solution of a certain complex function. FGWC using ABC has been implemented previously by \insertCite{fgwcabc1;textual}{naspaclust} and \insertCite{fgwcabc2;textual}{naspaclust}.
+
+#' @references
+#' \insertAllCited{}
 
 #' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}
 #' @examples

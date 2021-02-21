@@ -39,10 +39,13 @@
 #' \item \code{time} - computational time.
 #' }
 
-#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-#' the Teaching-Learning Based Optimization was developed by Rao et al. (2012) and Developed by Rao and Patel (2012) by adding the elitism algorithm 
-#' in order to get a more optimal solution of a certain complex function.
+#' the Teaching-Learning Based Optimization was developed by \insertCite{Rao2012;textual}{naspaclust} and Developed by \insertCite{Rao2012b;textual}{naspaclust} 
+#' by adding the elitism algorithm in order to get a more optimal solution of a certain complex function.
+
+#' @references
+#' \insertAllCited{}
 
 #' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}
 #' @examples

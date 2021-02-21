@@ -120,10 +120,11 @@ SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{
 Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using (Intelligent) Firefly Algorithm.
 }
 \details{
-Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-the Firefly Algorithm was developed by Yang (2012) and the technique is also upgraded by Fateen and Bonilla-Petriciolet (2014) in order to get a more optimal
-solution of a certain complex function.
+the Firefly Algorithm was developed by \insertCite{Yang2009;textual}{naspaclust} and the technique is also upgraded by 
+\insertCite{intfa;textual}{naspaclust} by adding the intelligent phase (choosing the best firefly based on the intensity) in order to get a more optimal
+solution of a certain complex function. FGWC using IFA has been implemented previously by \insertCite{Nasution2020;textual}{naspaclust}.
 }
 \examples{
 data('census2010')
@@ -141,6 +142,9 @@ ifa_param <- c(vi.dist='uniform', ei.distr='logchaotic',
           ffly.alpha=1, r.chaotic=4,update_type=4) 
 ##FGWC with IFA
 res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 \code{\link{fpafgwc}} \code{\link{gsafgwc}}

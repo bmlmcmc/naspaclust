@@ -24,32 +24,43 @@
 #' \item \code{time} - computational time.
 #' }
 
-#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
-#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. There are several algorithms currently
-#' provided in this package. The optimization algorithm uses the centroid as the parameter to be optimized. Here are the
-#' algorithm that can be used.
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
+#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. There are seven optimisation algorithms that currently
+#' provided in this package, mainly from the \insertCite{yang2014;textual}{naspaclust}. The optimization algorithm uses the centroid as the parameter to be optimized. Here are the
+#' algorithm that can be used:
 #' \itemize{
-#' \item \code{"classic"} - The classical algorithm of FGWC based on Mason and Jacobson (2007) and Runkler and Katz (for membership optimization).
-#' \item \code{"abc"} - Optimization using artificial bee colony algorithm based on Karaboga and Basturk (2010).
-#' \item \code{"fpa"} - Optimization using flower pollination algorithm based on Yang (2012).
-#' \item \code{"gsa"} - Optimization using gravitational search algorithm based on Rashedi (2009) and Li and Dong (2017).
-#' \item \code{"hho"} - Optimization using harris-hawk optimization based on Bairathi (2018) and Heidari (2019). 
-#' \item \code{"ifa"} - Optimization using intelligent firefly algorithm based on Yang (2012) and Fateen and Bonilla-Petriciolet (2014).
-#' \item \code{"pso"} - Optimization using particle swarm optimization based on Kennedy and Eberhart (1996).
-#' \item \code{"tlbo"} - Optimization using teaching-learning based optimization based on Rao et al.(2012) and Rao and Patel (2012).
+#' \item \code{"classic"} - The classical algorithm of FGWC based on \insertCite{fgwc;textual}{naspaclust} for centroid optimisation 
+#' and \insertCite{Runkler2006;textual}{naspaclust} for membership optimization.
+#' \item \code{"abc"} - Optimization using artificial bee colony algorithm based on \insertCite{Karaboga2007;textual}{naspaclust} 
+#' \insertCite{@see also @fgwcabc1 and @fgwcabc2 for FGWC implementation}{naspaclust}.
+#' \item \code{"fpa"} - Optimization using flower pollination algorithm based on \insertCite{Yang2012}{naspaclust}.
+#' \item \code{"gsa"} - Optimization using gravitational search algorithm based on \insertCite{rashedi2009;textual}{naspaclust} and 
+#' \insertCite{Li2017gsa;textual}{naspaclust} \insertCite{@see also @fgwcgsa for FGWC implementation}{naspaclust}.
+#' \item \code{"hho"} - Optimization using harris-hawk optimization with \code{"heidari"} \insertCite{Heidari2019}{naspaclust} (default).
+#' and \code{"bairathi"} \insertCite{Bairathi2018}{naspaclust}.
+#' \item \code{"ifa"} - Optimization using intelligent firefly algorithm based on \insertCite{Yang2009;textual}{naspaclust}, 
+#' as well as the intelligent improvement by \insertCite{intfa;textual}{naspaclust} \insertCite{@see also @Nasution2020 for FGWC implementation}{naspaclust}.
+#' \item \code{"pso"} - Optimization using particle swarm optimization based on \insertCite{Runkler2006;textual}{naspaclust} and 
+#' \insertCite{Bansal2011;textual}{naspaclust} for inertia option \insertCite{@see also @fgwcpso; @putra2017; @Abdussamad for FGWC implementation}{naspaclust}.
+#' \item \code{"tlbo"} - Optimization using teaching-learning based optimization based on \insertCite{Rao2012;textual}{naspaclust} and 
+#' elitism improvement by \insertCite{Rao2012b;textual}{naspaclust}.
 #' }
+#' Furthermore, there are 10 distance that can be used to calculate the membership (see \code{\link{cdist}} for details).
 #' the default parameter of FGWC (in case you do not want to tune anything) is \cr \code{
-#' c(kind='u',ncluster=2,m=2,distance='euclidean',order=2,alpha=0.7,a=1,b=1,max.iter=500,error=1e-5,randomN=1)}.\cr
+#' c(kind='u',ncluster=2,m=2,distance='euclidean',order=2,alpha=0.7,a=1,b=1,}\cr
+#' \code{max.iter=500,error=1e-5,randomN=1)}.\cr
 #' There is also a universal parameter to the optimization algorithm as well as the details. The default parameter
 #' for the optimization algorithm is \cr
-#' \code{c(vi.dist='uniform',npar=10,par.no=2,par.dist='euclidean',par.order=2,pso=TRUE,
-#' same=10,type='sim.annealing',ei.distr='normal',vmax=0.7,wmax=0.9,wmin=0.4,
-#' chaos=4,x0='F',map=0.7,ind=1,skew=0,sca=1)} \cr
+#' \code{c(vi.dist='uniform',npar=10,par.no=2,par.dist='euclidean',par.order=2,pso=TRUE,}\cr
+#' \code{same=10,type='sim.annealing',ei.distr='normal',vmax=0.7,wmax=0.9,wmin=0.4,}\cr
+#' \code{chaos=4,x0='F',map=0.7,ind=1,skew=0,sca=1)} \cr
 #' If you do not define a certain parameter, the parameter will be set to its default value
 
+#' @references
+#' \insertAllCited{}
 
-#' @seealso \code{\link{fgwcuv}},\code{\link{abcfgwc}},\code{\link{fpafgwc}},
-#' \code{\link{gsafgwc}},\code{\link{hhofgwc}},\code{\link{ifafgwc}},\code{\link{psofgwc}},\code{\link{tlbofgwc}}
+#' @seealso \code{\link{fgwcuv}}, \code{\link{abcfgwc}}, \code{\link{fpafgwc}},
+#' \code{\link{gsafgwc}}, \code{\link{hhofgwc}}, \code{\link{ifafgwc}}, \code{\link{psofgwc}}, \code{\link{tlbofgwc}}
 #' @examples
 #' data('census2010')
 #' data('census2010dist')
@@ -173,7 +184,7 @@ get_param_abc <- function(param){
     paramx <- c()
     if(is.na(param['n.onlooker'])|param['n.onlooker']<0) paramx['n.onlooker'] <- 5 else paramx['n.onlooker'] <- param['n.onlooker']
     if(is.na(param['limit'])|param['limit']<0) paramx['limit'] <- 4 else paramx['limit'] <- param['limit']
-    return(as.numeric(paramx))
+    return(paramx)
 }
 
 get_param_fpa <- function(param){

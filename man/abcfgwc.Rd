@@ -90,10 +90,10 @@ SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{
 Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Artificial Bee Colony
 }
 \details{
-Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-the Artificial Bee Colony (ABC) algorithm was developed by Karaboga and Basturk (2009) in order to get a more optimal
-solution of a certain complex function.
+the Artificial Bee Colony (ABC) algorithm was developed by \insertCite{Karaboga2007;textual}{naspaclust} in order to get a more optimal
+solution of a certain complex function. FGWC using ABC has been implemented previously by \insertCite{fgwcabc1;textual}{naspaclust} and \insertCite{fgwcabc2;textual}{naspaclust}.
 }
 \examples{
 data('census2010')
@@ -109,6 +109,9 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 abc_param <- c(vi.dist='normal',npar=5,pso=FALSE,same=15,n.onlooker=5,limit=5) 
 ##FGWC with ABC optimization algorithm
 res2 = fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 \code{\link{fpafgwc}} \code{\link{gsafgwc}}

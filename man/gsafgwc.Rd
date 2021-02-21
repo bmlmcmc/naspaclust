@@ -101,8 +101,9 @@ Fuzzy clustering with addition of spatial configuration of membership matrix wit
 \details{
 Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-the Gravitational Search Algorithm was developed by Rashedi (2009) and the technique is also upgraded by Li and Dong (2017) in order to get a more optimal
-solution of a certain complex function.
+the Gravitational Search Algorithm was developed by \insertCite{rashedi2009;textual}{naspaclust} and 
+and the technique is also upgraded by \insertCite{Li2017gsa;textual}{naspaclust} in order to get a more optimal
+solution of a certain complex function. FGWC using GSA has been implemented previously by \insertCite{fgwcgsa;textual}{naspaclust}.
 }
 \examples{
 data('census2010')
@@ -118,6 +119,9 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 gsa_param <- c(vi.dist='normal',npar=5,same=15,G=1,vmax=0.7,new=F) 
 ##FGWC with GSA
 res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 \code{\link{fpafgwc}} \code{\link{gsafgwc}}

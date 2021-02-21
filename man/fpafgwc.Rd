@@ -108,9 +108,9 @@ SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{
 Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Flower Pollination Algorithm
 }
 \details{
-Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-the Flower Pollination Algorithm was developed by Yang et al. (2012) in order to get a more optimal
+the Flower Pollination Algorithm was developed by \insertCite{Yang2012;textual}{naspaclust} in order to get a more optimal
 solution of a certain complex function.
 }
 \examples{

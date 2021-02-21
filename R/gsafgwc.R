@@ -43,8 +43,13 @@
 
 #' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-#' the Gravitational Search Algorithm was developed by Rashedi (2009) and the technique is also upgraded by Li and Dong (2017) in order to get a more optimal
-#' solution of a certain complex function.
+#' the Gravitational Search Algorithm was developed by \insertCite{rashedi2009;textual}{naspaclust} and 
+#' and the technique is also upgraded by \insertCite{Li2017gsa;textual}{naspaclust} in order to get a more optimal
+#' solution of a certain complex function. FGWC using GSA has been implemented previously by \insertCite{fgwcgsa;textual}{naspaclust}.
+
+
+#' @references
+#' \insertAllCited{}
 
 #' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}
 #' @examples

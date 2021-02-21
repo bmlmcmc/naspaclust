@@ -44,9 +44,9 @@
 #' \item \code{time} - computational time.
 #' }
 
-#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-#' the Flower Pollination Algorithm was developed by Yang et al. (2012) in order to get a more optimal
+#' the Flower Pollination Algorithm was developed by \insertCite{Yang2012;textual}{naspaclust} in order to get a more optimal
 #' solution of a certain complex function.
 
 #' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}

@@ -93,10 +93,10 @@ SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{
 Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Teaching-Learning Based Algorithm.
 }
 \details{
-Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-the Teaching-Learning Based Optimization was developed by Rao et al. (2012) and Developed by Rao and Patel (2012) by adding the elitism algorithm 
-in order to get a more optimal solution of a certain complex function.
+the Teaching-Learning Based Optimization was developed by \insertCite{Rao2012;textual}{naspaclust} and Developed by \insertCite{Rao2012b;textual}{naspaclust} 
+by adding the elitism algorithm in order to get a more optimal solution of a certain complex function.
 }
 \examples{
 data('census2010')
@@ -113,6 +113,9 @@ tlbo_param <- c(vi.dist="uniform",nstud=10,vmax=0.4, tlbo.same=10,
          nselection=10,elitism=F,n.elite=2)
 ##FGWC with TLBO
 res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,tlbo_param)
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 \code{\link{fpafgwc}} \code{\link{gsafgwc}}

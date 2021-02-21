@@ -36,8 +36,13 @@ library(rdist)
 #' \item \code{call} - the syntax called previously
 #' \item \code{time} - computational time.
 #' }
-#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
-#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means.
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
+#' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. There are two kinds of options in doing classical FGWC.
+#' The first is using \code{"u"} \insertCite{Runkler2006}{naspaclust} (default) for membership optimization 
+#' and \code{"v"} \insertCite{fgwc}{naspaclust} for centroid optimisation. 
+
+#' @references
+#' \insertAllCited{}
 
 #' @seealso \code{\link{fpafgwc,ifafgwc}}
 #' @examples

@@ -39,11 +39,13 @@
 #' \item \code{time} - computational time.
 #' }
 
-#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-#' the Harris-Hawk Optimization was developed by Bairathi (2018) and the technique is also upgraded by Heidari (2019)
-#' by adding progressive rapid dives in order to get a more optimal
-#' solution of a certain complex function.
+#' the Harris-Hawk Optimization was developed by \insertCite{Bairathi2018;textual}{naspaclust} and the technique is also upgraded by 
+#' \insertCite{Heidari2019;textual}{naspaclust} by adding progressive rapid dives in order to get a more optimal solution of a certain complex function.
+
+#' @references
+#' \insertAllCited{}
 
 #' @seealso \code{\link{fpafgwc}} \code{\link{gsafgwc}}
 #' @examples

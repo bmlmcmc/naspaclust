@@ -27,6 +27,11 @@ b = fgwc(census2010,census2010pop,census2010dist,'hho',c(1),c(1))
 cc = hhofgwc(census2010,census2010pop,census2010dist)
 
 
+## tune the ABC parameter
+abc_param <- c(vi.dist='normal',npar=10,pso=FALSE,same=15,n.onlooker=5,limit=5)
+## FGWC with ABC optimization algorithm
+res2 = fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param)
+
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
               alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 ## tune the FPA parameter
@@ -79,3 +84,10 @@ a8 = tlbofgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',elitism = 
 a9 = abcfgwc(census2010,census2010pop,census2010dist,3,2,'euclidean')
 a10 = abcfgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',pso=T)
 a11 = fpafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean')
+
+file.edit(".Rprofile")
+library(devtools)
+use_gpl3_license(version = 3, include_future = TRUE)
+build_manual()
+
+Sys.setenv(PATH=paste(Sys.getenv("PATH"),"C:/Users/dokuganryu/AppData/Local/Programs/MiKTeX/miktex/bin/",sep=";"))

@@ -94,11 +94,10 @@ SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{
 Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Harris-Hawk Algorithm.
 }
 \details{
-Fuzzy Geographically Weighted Clustering (FGWC) was developed by Mason and Jacobson (2007) by adding 
+Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-the Harris-Hawk Optimization was developed by Bairathi (2018) and the technique is also upgraded by Heidari (2019)
-by adding progressive rapid dives in order to get a more optimal
-solution of a certain complex function.
+the Harris-Hawk Optimization was developed by \insertCite{Bairathi2018;textual}{naspaclust} and the technique is also upgraded by 
+\insertCite{Heidari2019;textual}{naspaclust} by adding progressive rapid dives in order to get a more optimal solution of a certain complex function.
 }
 \examples{
 data('census2010')
@@ -114,6 +113,9 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 hho_param <- c(vi.dist='normal',npar=5,same=15,algo='bairathi',a1=3,a2=1,a3=0.4)
 ##FGWC with HHO
 res2 = fgwc(census2010,census2010pop,census2010dist,'hho',param_fgwc,hho_param)
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 \code{\link{fpafgwc}} \code{\link{gsafgwc}}
