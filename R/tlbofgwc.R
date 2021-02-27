@@ -61,7 +61,7 @@
 #' tlbo_param <- c(vi.dist="uniform",nstud=10, tlbo.same=10,
 #'          nselection=10,elitism=F,n.elite=2)
 #' ##FGWC with TLBO
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,tlbo_param)
+#' res2 = fgwc(census2010,census2010pop,census2010dist,'tlbo',param_fgwc,tlbo_param)
 
 
 tlbofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 

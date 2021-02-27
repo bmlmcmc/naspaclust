@@ -25,6 +25,7 @@
 #' Can be defined as \code{type=} in \code{opt_param}. Default is \code{'sim.annealing'}
 #' @param wmax Maximum inertia weight. Can be defined as \code{wmax} in \code{opt_param}. Default is 0.9.
 #' @param wmin Minimum inertia weight. Can be defined as \code{wmin} in \code{opt_param}. Default is 0.4.
+#' @param map Chaotic mapping parameter. Userful when \code{w.inert='chaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.4.
 
 #' @return an object of class \code{'fgwc'}.\cr
 #' An \code{'fgwc'} object contains as follows:
@@ -65,14 +66,14 @@
 #' ## tune the PSO parameter
 #' pso_param <- c(vi.dist='uniform',npar=15,
 #'          vmax=0.8, pso.same=10, c1=0.7, c2=0.6, w.inert='chaotic',
-#'                      wmax=0.8,wmin=0.3)
+#'                      wmax=0.8,wmin=0.3,map=0.3)
 #' ##FGWC with PSO
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,pso_param)
+#' res2 = fgwc(census2010,census2010pop,census2010dist,'pso',param_fgwc,pso_param)
 
 psofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",npar=10,
           vmax=0.7, pso.same=10, c1=0.49, c2=0.49, w.inert='sim.annealing',
-                      wmax=0.9,wmin=0.4){
+                      wmax=0.9,wmin=0.4,map=0.4){
   require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
@@ -171,7 +172,7 @@ update_inertia <- function(w.inert, wmax, wmin, z, iter, maxiter) {
     return(wmax)
   }
   else if(w.inert=="chaotic") {
-    return((wmax-wmin)*(1-iter/maxiter)+(wmax*z))
+    return((wmax-wmin)*(1-iter/maxiter)+(wmin*z))
   }
   else if(w.inert=="sim.annealing") {
     return(wmin+((wmax-wmin)*0.95^(iter-1)))
