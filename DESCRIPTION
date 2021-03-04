@@ -10,7 +10,7 @@ Suggests: ppclust, spatialClust, cluster, ggplot
 Imports: Rdpack
 RdMacros: Rdpack
 Author: Bahrul Ilmi Nasution, Robert Kurniawan, Rezzy Eko Caraka
-Maintainer: Bahrul Ilmi Nasution <bahrulnst@gmail.com>
+Maintainer: Bahrul Ilmi Nasution <bahrulnst@gmail.com> and Rezzy Eko Caraka <rezzyekocaraka@gmail.com>
 Description: This package consists of the Spatial Clustering using Fuzzy Geographically Weighted Clustering improved with nature-inspired optimization algorithm.
 License: GPL-3
 Encoding: UTF-8
