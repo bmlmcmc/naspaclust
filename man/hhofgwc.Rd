@@ -104,7 +104,7 @@ data('census2010')
 data('census2010dist')
 data('census2010pop')
 # First way
-hhofgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nhh=10)
+res1 <- hhofgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nhh=10)
 # Second way
 # initiate parameter
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -112,7 +112,7 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 ## tune the HHO parameter
 hho_param <- c(vi.dist='normal',npar=5,same=15,algo='bairathi',a1=3,a2=1,a3=0.4)
 ##FGWC with HHO
-res2 = fgwc(census2010,census2010pop,census2010dist,'hho',param_fgwc,hho_param)
+res2 <- fgwc(census2010,census2010pop,census2010dist,'hho',param_fgwc,hho_param)
 }
 \references{
 \insertAllCited{}

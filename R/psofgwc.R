@@ -58,7 +58,7 @@
 #' data('census2010dist')
 #' data('census2010pop')
 #' # First way
-#' ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
+#' res1 <- psofgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
 #' # Second way
 #' # initiate parameter
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -68,13 +68,15 @@
 #'          vmax=0.8, pso.same=10, c1=0.7, c2=0.6, w.inert='chaotic',
 #'                      wmax=0.8,wmin=0.3,map=0.3)
 #' ##FGWC with PSO
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'pso',param_fgwc,pso_param)
+#' res2 <- fgwc(census2010,census2010pop,census2010dist,'pso',param_fgwc,pso_param)
+
+#' @export
 
 psofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",npar=10,
           vmax=0.7, pso.same=10, c1=0.49, c2=0.49, w.inert='sim.annealing',
                       wmax=0.9,wmin=0.4,map=0.4){
-  require(beepr)
+  # require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
   n <- nrow(data)

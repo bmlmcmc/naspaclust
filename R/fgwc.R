@@ -1,7 +1,6 @@
 ########################################################
 #####################CLASSICAL FGWC#####################
 ########################################################
-library(rdist)
 
 #' Classical Fuzzy Geographicaly Weighted Clustering
 #' @description Fuzzy clustering with addition of spatial configuration of membership matrix
@@ -49,9 +48,10 @@ library(rdist)
 #' data('census2010')
 #' data('census2010dist')
 #' data('census2010pop')
-#' fgwcuv(census2010,census2010pop,census2010dist,'u',3,2,'euclidean',4)
+#' res1 <- fgwcuv(census2010,census2010pop,census2010dist,'u',3,2,'euclidean',4)
 #'
 
+#' @export
 fgwcuv <- function(data, pop, distmat, kind=NA,ncluster=2, m=2, distance='euclidean', order=2,
                       alpha=0.7, a=1, b=1, max.iter=500, error=1e-5,
                      randomN=0, uij=NA, vi=NA) {
@@ -128,6 +128,7 @@ fgwcuv <- function(data, pop, distmat, kind=NA,ncluster=2, m=2, distance='euclid
   return (result)
 }
 
+#' @export
 ##membentuk distance matrix dari lattitude longitude
 formdistmat <- function (datalonglat,p=3) {
   jarak <- matrix(0,nrow(datalonglat),nrow(datalonglat))
@@ -139,11 +140,13 @@ formdistmat <- function (datalonglat,p=3) {
   return(jarak)
 }
 
+#' @export
 ##vi dari nilai keanggotaan
 vi <- function(data,uij,m) {
   return (t(uij^m)%*%data/colSums(uij^m))
 }
 
+#' @export
 ##uij dari centroid
 uij <- function(data,vi,m,distance,order=2) {
   u <- matrix(0,nrow(data),nrow(vi))
@@ -154,12 +157,14 @@ uij <- function(data,vi,m,distance,order=2) {
   return(res)
 }
 
+#' @export
 ##menentukan cluster dari data
 determine_cluster <- function(data,uij) {
 	clust = apply(uij,1,which.max)
 	return(cbind.data.frame(data,cluster=clust))
 }
 
+#' @export
 ##memodifikasi matriks keanggotaan dengan memanfaatkan matriks jarak dan populasi
 renew_uij <- function(data,old_uij,mi.mj,dist,alpha,beta,a,b) {
   diag(dist) <- Inf
@@ -171,6 +176,7 @@ renew_uij <- function(data,old_uij,mi.mj,dist,alpha,beta,a,b) {
   return(new_uij)
 }
 
+#' @export
 ##generate matrik keanggotaan
 gen_uij <- function(data,ncluster,n,randomN) {
   set.seed(randomN)
@@ -178,6 +184,7 @@ gen_uij <- function(data,ncluster,n,randomN) {
   return(uij/rowSums(uij))
 }
 
+#' @export
 ##generate pusat cluster
 gen_vi <- function(data,ncluster,gendist,randomN) {##generate centroid
   p <- ncol(data)
@@ -194,6 +201,7 @@ gen_vi <- function(data,ncluster,gendist,randomN) {##generate centroid
   return(piclass)
 }
 
+#' @export
 ##fungsi objektif
 jfgwcu <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   vi <- (t(uij^m)%*%data/colSums(uij^m))
@@ -201,6 +209,7 @@ jfgwcu <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   return(sum((uij^m)*d))
 }
 
+#' @export
 ##fungsi objektif
 jfgwcu2 <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   u <- renew_uij(data,u$u,mi.mj,dist,alpha,beta,a,b)
@@ -209,6 +218,7 @@ jfgwcu2 <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   return(sum((uij^m)*d))
 }
 
+#' @export
 jfgwcv  <- function(data,vi,m,distance,order) { ##fungsi objektif fgwc-v
   u <- matrix(0,nrow(data),nrow(vi))
   d <- cdist(data,vi,distance,order)^2
@@ -222,6 +232,7 @@ jfgwcv  <- function(data,vi,m,distance,order) { ##fungsi objektif fgwc-v
   return(sum((u^m)*d))
 }
 
+#' @export
 jfgwcv2  <- function(data,vi,m,distance,order,mi.mj,dist,alpha,beta,a,b) { ##fungsi objektif fgwc-v
   u <- uij(data,vi,m,distance,order)
   u <- renew_uij(data,u$u,mi.mj,dist,alpha,beta,a,b)

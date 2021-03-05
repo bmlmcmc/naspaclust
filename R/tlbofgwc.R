@@ -52,22 +52,24 @@
 #' data('census2010dist')
 #' data('census2010pop')
 #' # First way
-#' ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
+#' res1 <- tlbofgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,nstud=10)
 #' # Second way
 #' # initiate parameter
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 #'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 #' ## tune the TLBO parameter
 #' tlbo_param <- c(vi.dist="uniform",nstud=10, tlbo.same=10,
-#'          nselection=10,elitism=F,n.elite=2)
+#'          nselection=10,elitism=FALSE,n.elite=2)
 #' ##FGWC with TLBO
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'tlbo',param_fgwc,tlbo_param)
+#' res2 <- fgwc(census2010,census2010pop,census2010dist,'tlbo',param_fgwc,tlbo_param)
+
+#' @export
 
 
 tlbofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",nstud=10, tlbo.same=10,
           nselection=10,elitism=F,n.elite=2){
-  require(beepr)
+  # require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
   n <- nrow(data)

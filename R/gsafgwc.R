@@ -57,21 +57,23 @@
 #' data('census2010dist')
 #' data('census2010pop')
 #' # First way
-#' gsafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,npar=10)
+#' res1 <- gsafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,npar=10)
 #' # Second way
 #' # initiate parameter
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 #'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 #' ## tune the GSA parameter
-#' gsa_param <- c(vi.dist='normal',npar=5,same=15,G=1,vmax=0.7,new=F) 
+#' gsa_param <- c(vi.dist='normal',npar=5,same=15,G=1,vmax=0.7,new=FALSE) 
 #' ##FGWC with GSA
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
+#' res2 <- fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
+
+#' @export
 
 
 gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",npar=10,par.no=2,par.dist='euclidean', par.order=2,
           gsa.same=10, G=1, vmax=0.7, new=F){
-  require(beepr)
+  # require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
   n <- nrow(data)
@@ -153,6 +155,7 @@ gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(gsa)
 }
 
+#' @export
 force_v <- function(par,no,G,v,vmax,par.dist,par.order,randomN){
   dd <- dim(par$centroid[[1]])
   intel.par <- intel.ffly(par,no)
@@ -184,6 +187,7 @@ force_v <- function(par,no,G,v,vmax,par.dist,par.order,randomN){
   return(v)
 }
 
+#' @export
 new.move <- function(par,pbest,gbest,randomN){ ##Li dan Dong, 2017 GSA new technique
   dd <- dim(par)
   mu <- (par+pbest+gbest)/3

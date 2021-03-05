@@ -51,7 +51,7 @@
 #' data('census2010dist')
 #' data('census2010pop')
 #' # First way
-#' abcfgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nfood=10)
+#' res1 <- abcfgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nfood=10)
 #' # Second way
 #' # initiate parameter
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -59,11 +59,13 @@
 #' ## tune the ABC parameter
 #' abc_param <- c(vi.dist='normal',npar=5,pso=FALSE,same=15,n.onlooker=5,limit=5) 
 #' ##FGWC with ABC optimization algorithm
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
+#' res2 <- fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
+
+#' @export
 
 abcfgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100, randomN=0, vi.dist="uniform", nfood=10, n.onlooker=5, limit=4, pso=F, abc.same=10){
-  require(beepr)
+  # require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
   n <- nrow(data)

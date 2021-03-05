@@ -26,7 +26,8 @@ psofgwc(
   c2 = 0.49,
   w.inert = "sim.annealing",
   wmax = 0.9,
-  wmin = 0.4
+  wmin = 0.4,
+  map = 0.4
 )
 }
 \arguments{
@@ -73,6 +74,8 @@ Can be defined as \code{type=} in \code{opt_param}. Default is \code{'sim.anneal
 
 \item{wmin}{Minimum inertia weight. Can be defined as \code{wmin} in \code{opt_param}. Default is 0.4.}
 
+\item{map}{Chaotic mapping parameter. Userful when \code{w.inert='chaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.4.}
+
 \item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
 
 \item{uij}{membership matrix initialisation.}
@@ -111,7 +114,7 @@ data('census2010')
 data('census2010dist')
 data('census2010pop')
 # First way
-ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
+res1 <- psofgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
 # Second way
 # initiate parameter
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -119,9 +122,9 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 ## tune the PSO parameter
 pso_param <- c(vi.dist='uniform',npar=15,
          vmax=0.8, pso.same=10, c1=0.7, c2=0.6, w.inert='chaotic',
-                     wmax=0.8,wmin=0.3)
+                     wmax=0.8,wmin=0.3,map=0.3)
 ##FGWC with PSO
-res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,pso_param)
+res2 <- fgwc(census2010,census2010pop,census2010dist,'pso',param_fgwc,pso_param)
 }
 \references{
 \insertAllCited{}

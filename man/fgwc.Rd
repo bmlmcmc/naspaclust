@@ -80,11 +80,11 @@ data('census2010pop')
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 ## FGWC with classical algorithm
-res1 = fgwc(census2010,census2010pop,census2010dist,'classic',param_fgwc,1)
+res1 <- fgwc(census2010,census2010pop,census2010dist,'classic',param_fgwc,1)
 ## tune the ABC parameter
 abc_param <- c(vi.dist='normal',npar=5,pso=FALSE,same=15,n.onlooker=5,limit=5) 
 ## FGWC with ABC optimization algorithm
-res2 = fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
+res2 <- fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
 }
 \references{
 \insertAllCited{}

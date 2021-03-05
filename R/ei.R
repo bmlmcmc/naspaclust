@@ -1,3 +1,4 @@
+#' @export
 eiDist <- function(distr='normal',n,randomN=40,r=4,m=0.7,ind=1,skew=0,sca=1) {
   set.seed(randomN)
   if(distr=='uniform') {
@@ -7,7 +8,7 @@ eiDist <- function(distr='normal',n,randomN=40,r=4,m=0.7,ind=1,skew=0,sca=1) {
     return(rnorm(n,0,1))
   }
   else if (distr=="levy") {
-    require(stabledist)
+    # require(stabledist)
     return(rstable(n,alpha,beta,gamma,delta))
   }
   else if (distr=="logchaotic") {
@@ -18,6 +19,7 @@ eiDist <- function(distr='normal',n,randomN=40,r=4,m=0.7,ind=1,skew=0,sca=1) {
   }
 }
 
+#' @export
 logchaotic <- function(n,r=4,seed=1) {
   set.seed(seed)
   x0 <- runif(1)
@@ -29,6 +31,7 @@ logchaotic <- function(n,r=4,seed=1) {
   return(x)
 }
 
+#' @export
 kentchaotic <- function(n,m=0.7,seed) {
   set.seed(seed)
   x0 <- runif(1)
@@ -45,6 +48,7 @@ kentchaotic <- function(n,m=0.7,seed) {
   return(x)
 }
 
+#' @export
 update_alpha <- function(alpha, iter, maxiter, type) {
   if(type==1) {
     return(1e-5+(alpha-(1e-5))*exp(-iter))

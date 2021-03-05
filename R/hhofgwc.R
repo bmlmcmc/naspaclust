@@ -53,7 +53,7 @@
 #' data('census2010dist')
 #' data('census2010pop')
 #' # First way
-#' hhofgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nhh=10)
+#' res1 <- hhofgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nhh=10)
 #' # Second way
 #' # initiate parameter
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -61,13 +61,15 @@
 #' ## tune the HHO parameter
 #' hho_param <- c(vi.dist='normal',npar=5,same=15,algo='bairathi',a1=3,a2=1,a3=0.4)
 #' ##FGWC with HHO
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'hho',param_fgwc,hho_param)
+#' res2 <- fgwc(census2010,census2010pop,census2010dist,'hho',param_fgwc,hho_param)
+
+#' @export
 
 
 hhofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1, 
 					error=1e-5, max.iter=100,randomN=0,vi.dist="uniform",nhh=10,hh.alg='heidari',
           A=c(2,1,0.5),p=0.5,hh.same=10,levy.beta=1.5,update.type=5){
-  require(beepr)
+  # require(beepr)
   randomnn <- randomN
   ptm<-proc.time()
   n <- nrow(data)
@@ -144,6 +146,7 @@ hhofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(hho)
 }
 
+#' @export
 hh.attack.bairathi <- function(hawk,hawks,gbest,A,p,rand,seed,best){
   dd <- dim(hawk)
   set.seed(seed<-seed+10)
@@ -157,7 +160,7 @@ hh.attack.bairathi <- function(hawk,hawks,gbest,A,p,rand,seed,best){
   else return((gbest-hawk)-c1*(c2*gbest-hawk)) ##global exploitation
 }
 
-
+#' @export
 hh.attack.heidari <- function(hawk,hawks,rabbit,E,A,p,rand,levy.beta,seed,best,worst,fithawk,data,m,
 	distance,order,mi.mj,dist,alpha,beta,a,b){
 	set.seed(seed<-seed+10)
@@ -198,6 +201,7 @@ hh.attack.heidari <- function(hawk,hawks,rabbit,E,A,p,rand,levy.beta,seed,best,w
 	}	
 }
 
+#' @export
 rlevy <- function(n,beta,seed){
   set.seed(seed+100)
   u <- runif(n)

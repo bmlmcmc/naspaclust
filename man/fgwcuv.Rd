@@ -84,7 +84,7 @@ and \code{"v"} \insertCite{fgwc}{naspaclust} for centroid optimisation.
 data('census2010')
 data('census2010dist')
 data('census2010pop')
-fgwcuv(census2010,census2010pop,census2010dist,'u',3,2,'euclidean',4)
+res1 <- fgwcuv(census2010,census2010pop,census2010dist,'u',3,2,'euclidean',4)
 
 }
 \references{

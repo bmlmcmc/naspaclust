@@ -1,3 +1,5 @@
+#' @export
+
 ##penghitungan index
 index_fgwc <- function(data,cluster,uij,vi,m,a=exp(1)) {
   result<-list()
@@ -15,16 +17,19 @@ index_fgwc <- function(data,cluster,uij,vi,m,a=exp(1)) {
 #################VALIDATION MEASUREMENT#################
 ########################################################
 
+#' @export
 ##kelompok yang optimum dinyatakan dengan nilai PC yang maksimum.
 PC1 <- function(uij) {
   return(sum(uij^2)/nrow(uij))
 }
 
+#' @export
 ##kelompok yang optimum dinyatakan dengan nilai indeks CE yang minimum.
 CE1 <- function(uij,a=exp(1)) {##
   return(sum(uij*log(uij,a))/(-nrow(uij)))
 }
 
+#' @export
 ##Partisi yang optimum dinyatakan dengan nilai indeks SC yang minimum.
 SC1 <- function(data,cluster,uij,vi,m) {
   d <- matrix(0,nrow(data),nrow(vi))
@@ -46,6 +51,7 @@ SC1 <- function(data,cluster,uij,vi,m) {
   return(sum(pt1/pt2))
 }
 
+#' @export
 ##Jumlah kelompok yang optimum dinyatakan dengan nilai indeks S yang minimum.
 SI1 <- function(data,uij,vi) {
   d <- matrix(0,nrow(data),nrow(vi))
@@ -66,6 +72,7 @@ SI1 <- function(data,uij,vi) {
   return(sum(pt1/pt2))
 }
 
+#' @export
 ##Jumlah kelompok yang optimal dinyatakan dengan nilai XB yang minimum.
 XB1 <- function(data,uij,vi,m) {
   d <- matrix(0,nrow(data),nrow(vi))
@@ -82,6 +89,7 @@ XB1 <- function(data,uij,vi,m) {
   return(pt1/pt2)
 }
 
+#' @export
 ##Ketika nilai IFV maksimum maka kualitas cluster semakin baik.
 IFV1 <- function(data,uij,vi,m) {
   vkvi <- matrix(0,nrow(vi),nrow(vi))
@@ -104,6 +112,7 @@ IFV1 <- function(data,uij,vi,m) {
   return(sum(u2ij*((log(nrow(vi),2)-log2u)^2)/nrow(data)*(SDmax/sigmaD)))
 }
 
+#' @export
 ##Ketika nilai Kwon minimum maka kualitas cluster semakin baik.
 Kwon1 <- function(data,uij,vi,m) {
   d <- matrix(0,nrow(data),nrow(vi))

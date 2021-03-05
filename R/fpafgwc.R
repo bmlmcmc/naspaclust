@@ -55,7 +55,7 @@
 #' data('census2010dist')
 #' data('census2010pop')
 #' # First way
-#' fpafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nflow=10)
+#' res1 <- fpafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nflow=10)
 #' # Second way
 #' # initiate parameter
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -63,12 +63,17 @@
 #' ## tune the FPA parameter
 #' fpa_param <- c(vi.dist='normal',npar=5,same=15,p=0.7,gamma=1.2,lambda=1.5,ei.distr='logchaotic',chaos=3) 
 #' ##FGWC with FPA
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'fpa',param_fgwc,fpa_param)
+#' res2 <- fgwc(census2010,census2010pop,census2010dist,'fpa',param_fgwc,fpa_param)
+
+#' @export
+#' @import beepr
+#' @import stabledist
+#' @import rdist
 
 fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1,
 					error=1e-5, max.iter=100, randomN=0, vi.dist="uniform", nflow=10, p=0.8, gamma=1, lambda=1.5, delta=0,
           ei.distr='normal', flow.same=10,r=4,m.chaotic=0.7,skew=0,sca=1){
-  require(stabledist)
+  # require(stabledist)
   randomnn <- randomN
   ptm<-proc.time()
   n <- nrow(data)
@@ -131,6 +136,7 @@ fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(fpa)
 }
 
+#' @export
 pollination <- function(flow,p,pollen,gamma,lambda,delta,seed,ei.distr,r,m,ind,skew,sca){
   set.seed(seed<-seed+10)
   rand <- runif(length(flow))

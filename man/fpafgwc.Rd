@@ -118,7 +118,7 @@ data('census2010')
 data('census2010dist')
 data('census2010pop')
 # First way
-fpafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nflow=10)
+res1 <- fpafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nflow=10)
 # Second way
 # initiate parameter
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -126,7 +126,7 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 ## tune the FPA parameter
 fpa_param <- c(vi.dist='normal',npar=5,same=15,p=0.7,gamma=1.2,lambda=1.5,ei.distr='logchaotic',chaos=3) 
 ##FGWC with FPA
-res2 = fgwc(census2010,census2010pop,census2010dist,'fpa',param_fgwc,fpa_param)
+res2 <- fgwc(census2010,census2010pop,census2010dist,'fpa',param_fgwc,fpa_param)
 }
 \seealso{
 \code{\link{fpafgwc}} \code{\link{gsafgwc}}

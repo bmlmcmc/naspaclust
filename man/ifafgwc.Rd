@@ -131,17 +131,17 @@ data('census2010')
 data('census2010dist')
 data('census2010pop')
 # First way
-ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
+res1 <- ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,nfly=10)
 # Second way
 # initiate parameter
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 ## tune the IFA parameter
 ifa_param <- c(vi.dist='uniform', ei.distr='logchaotic',
-					fa.same=10, nfly=15, ffly.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
+					fa.same=10, npar=15, par.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
           ffly.alpha=1, r.chaotic=4,update_type=4) 
 ##FGWC with IFA
-res2 = fgwc(census2010,census2010pop,census2010dist,'gsa',param_fgwc,gsa_param)
+res2 <- fgwc(census2010,census2010pop,census2010dist,'ifa',param_fgwc,ifa_param)
 }
 \references{
 \insertAllCited{}

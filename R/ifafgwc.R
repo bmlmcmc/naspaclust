@@ -63,17 +63,19 @@
 #' data('census2010dist')
 #' data('census2010pop')
 #' # First way
-#' ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,npar=10)
+#' res1 <- ifafgwc(census2010,census2010pop,census2010dist,3,2,'minkowski',4,nfly=10)
 #' # Second way
 #' # initiate parameter
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 #'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 #' ## tune the IFA parameter
 #' ifa_param <- c(vi.dist='uniform', ei.distr='logchaotic',
-#'						fa.same=10, nfly=15, ffly.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
+#'						fa.same=10, npar=15, par.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
 #'           ffly.alpha=1, r.chaotic=4,update_type=4) 
 #' ##FGWC with IFA
-#' res2 = fgwc(census2010,census2010pop,census2010dist,'ifa',param_fgwc,ifa_param)
+#' res2 <- fgwc(census2010,census2010pop,census2010dist,'ifa',param_fgwc,ifa_param)
+
+#' @export
 
 
 ########################################################
@@ -142,8 +144,8 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
     randomN <- randomN+nfly
     if (gen==max.iter || same==fa.same) break
   }##end repeat
-  print(class(ffly.finalpos.other))
-  if (class(ffly.finalpos.other)=="list") {
+  # print(class(ffly.finalpos.other))
+  if (any(class(ffly.finalpos.other)=="list")) {
   	new_uij <- ffly.finalpos.other[[1]]
   	vi <- ffly.finalpos[[1]]
   }
@@ -162,6 +164,7 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
   return (ifa)
 }
 
+#' @export
 init.swarm <- function(data, pop, distmat, distance, order, vi.dist, ncluster,
                         m, alpha, a, b, randomN, nfly) {
   inten <- rep(0,nfly)
@@ -176,6 +179,7 @@ init.swarm <- function(data, pop, distmat, distance, order, vi.dist, ncluster,
   return(result)
 }
 
+#' @export
 intel.ffly <- function(ffly.list,no) {
   best <- order(ffly.list$I,decreasing = F)[1:no]
   intel.uij <- lapply(best, function(x) ffly.list$membership[[x]])
@@ -185,6 +189,7 @@ intel.ffly <- function(ffly.list,no) {
   return(result)
 }
 
+#' @export
 swarm_dist <- function (swarm1,swarm2,distance,order) {
   # jarak<-rep(0,nrow(swarm1))
   # for (i in 1:nrow(swarm1)) {
@@ -194,6 +199,7 @@ swarm_dist <- function (swarm1,swarm2,distance,order) {
   return(diag(dist(swarm1,swarm2,distance,order)))
 }
 
+#' @export
 moving <- function(ffly.all,no,ff.beta,gamma,ff.alpha,ffly.dist,ffly.order,ei.distr,r.chaotic,m.chaotic,ind.levy,skew.levy,sca.levy,
                   data,m,distance,order,mi.mj,dist,alpha,beta,a,b,randomN){##menggerakkan firefly
   times <- 0

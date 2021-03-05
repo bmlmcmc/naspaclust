@@ -100,7 +100,7 @@ data('census2010')
 data('census2010dist')
 data('census2010pop')
 # First way
-abcfgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nfood=10)
+res1 <- abcfgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nfood=10)
 # Second way
 # initiate parameter
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
@@ -108,7 +108,7 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 ## tune the ABC parameter
 abc_param <- c(vi.dist='normal',npar=5,pso=FALSE,same=15,n.onlooker=5,limit=5) 
 ##FGWC with ABC optimization algorithm
-res2 = fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
+res2 <- fgwc(census2010,census2010pop,census2010dist,'abc',param_fgwc,abc_param) 
 }
 \references{
 \insertAllCited{}
