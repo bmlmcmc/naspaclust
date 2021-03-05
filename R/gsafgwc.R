@@ -3,7 +3,7 @@
 #' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
 #' @param pop an n*1 vector contains population.
 #' @param distmat an n*n distance matrix between regions.
-#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
 #' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
 #' @param order, minkowski order. default is 2.
@@ -13,8 +13,6 @@
 #' @param max.iter maximum iteration. Default is 500.
 #' @param error error tolerance. Default is 1e-5.
 #' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
-#' @param uij membership matrix initialisation.
-#' @param vi centroid matrix initialisation.
 #' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
 #' @param npar number of particle. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
 #' @param par.no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}. Default is 2
@@ -155,7 +153,11 @@ gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(gsa)
 }
 
-#' @export
+#' @rdname gsafgwc
+#' @param par the particle position.
+#' @param no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.
+#' @param v particle velocity.
+
 force_v <- function(par,no,G,v,vmax,par.dist,par.order,randomN){
   dd <- dim(par$centroid[[1]])
   intel.par <- intel.ffly(par,no)
@@ -187,7 +189,10 @@ force_v <- function(par,no,G,v,vmax,par.dist,par.order,randomN){
   return(v)
 }
 
-#' @export
+#' @rdname gsafgwc
+#' @param par the particle position.
+#' @param pbest the personal particle best position.
+#' @param gbest the global best position. 
 new.move <- function(par,pbest,gbest,randomN){ ##Li dan Dong, 2017 GSA new technique
   dd <- dim(par)
   mu <- (par+pbest+gbest)/3

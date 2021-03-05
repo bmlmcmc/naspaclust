@@ -2,9 +2,30 @@
 % Please edit documentation in R/mainfunction.R
 \name{fgwc}
 \alias{fgwc}
+\alias{get_param_abc}
+\alias{get_param_fpa}
+\alias{get_param_gsa}
+\alias{get_param_hho}
+\alias{get_param_ifa}
+\alias{get_param_pso}
+\alias{get_param_tlbo}
 \title{Fuzzy Geographicaly Weighted Clustering}
 \usage{
 fgwc(data, pop, distmat, algorithm = "classic", fgwc_param, opt_param)
+
+get_param_abc(param)
+
+get_param_fpa(param)
+
+get_param_gsa(param)
+
+get_param_hho(param)
+
+get_param_ifa(param)
+
+get_param_pso(param)
+
+get_param_tlbo(param)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -18,6 +39,8 @@ fgwc(data, pop, distmat, algorithm = "classic", fgwc_param, opt_param)
 \item{fgwc_param}{a vector that consists of FGWC parameter (see \code{\link{fgwcuv}} for parameter details)}
 
 \item{opt_param}{a vector that consists of optimization algorithm parameter (see \code{\link{fgwcuv}} for parameter details)}
+
+\item{param}{the optimisation parameter}
 }
 \value{
 an object of class \code{"fgwc"}.\cr
@@ -58,7 +81,7 @@ and \code{"bairathi"} \insertCite{Bairathi2018}{naspaclust}.
 as well as the intelligent improvement by \insertCite{intfa;textual}{naspaclust} \insertCite{@see also @Nasution2020 for FGWC implementation}{naspaclust}.
 \item \code{"pso"} - Optimization using particle swarm optimization based on \insertCite{Runkler2006;textual}{naspaclust} and 
 \insertCite{Bansal2011;textual}{naspaclust} for inertia option \insertCite{@see also @fgwcpso; @putra2017; @Abdussamad for FGWC implementation}{naspaclust}.
-\item \code{"tlbo"} - Optimization using teaching-learning based optimization based on \insertCite{Rao2012;textual}{naspaclust} and 
+\item \code{"tlbo"} - Optimization using teaching - learning based optimization based on \insertCite{Rao2012;textual}{naspaclust} and 
 elitism improvement by \insertCite{Rao2012b;textual}{naspaclust}.
 }
 Furthermore, there are 10 distance that can be used to calculate the membership (see \code{\link{cdist}} for details).

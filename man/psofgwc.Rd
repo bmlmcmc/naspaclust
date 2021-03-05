@@ -37,6 +37,8 @@ psofgwc(
 
 \item{distmat}{an n*n distance matrix between regions.}
 
+\item{ncluster}{an integer. The number of clusters.}
+
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
 \item{distance}{the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.}
@@ -75,12 +77,6 @@ Can be defined as \code{type=} in \code{opt_param}. Default is \code{'sim.anneal
 \item{wmin}{Minimum inertia weight. Can be defined as \code{wmin} in \code{opt_param}. Default is 0.4.}
 
 \item{map}{Chaotic mapping parameter. Userful when \code{w.inert='chaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.4.}
-
-\item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
-
-\item{uij}{membership matrix initialisation.}
-
-\item{vi}{centroid matrix initialisation.}
 }
 \value{
 an object of class \code{'fgwc'}.\cr

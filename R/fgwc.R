@@ -8,6 +8,7 @@
 #' @param pop an n*1 vector contains population.
 #' @param distmat an n*n distance matrix between regions.
 #' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
 #' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
 #' @param order, minkowski order. default is 2.
@@ -43,7 +44,7 @@
 #' @references
 #' \insertAllCited{}
 
-#' @seealso \code{\link{fpafgwc,ifafgwc}}
+#' @seealso \code{\link{abcfgwc}} \code{\link{fpafgwc}} \code{\link{gsafgwc}} \code{\link{hhofgwc}} \code{\link{ifafgwc}} \code{\link{psofgwc}} \code{\link{tlbofgwc}}
 #' @examples
 #' data('census2010')
 #' data('census2010dist')
@@ -128,25 +129,13 @@ fgwcuv <- function(data, pop, distmat, kind=NA,ncluster=2, m=2, distance='euclid
   return (result)
 }
 
-#' @export
-##membentuk distance matrix dari lattitude longitude
-formdistmat <- function (datalonglat,p=3) {
-  jarak <- matrix(0,nrow(datalonglat),nrow(datalonglat))
-  for (i in 1:nrow(datalonglat)) {
-    for (j in 1:nrow(datalonglat)) {
-      jarak[i,j] <- sum((matrix(datalonglat[i,],ncol=1)-matrix(datalonglat[j,],ncol=1))^p)^(1/p)
-    }
-  }
-  return(jarak)
-}
-
-#' @export
+#' @rdname fgwcuv
 ##vi dari nilai keanggotaan
 vi <- function(data,uij,m) {
   return (t(uij^m)%*%data/colSums(uij^m))
 }
 
-#' @export
+#' @rdname fgwcuv
 ##uij dari centroid
 uij <- function(data,vi,m,distance,order=2) {
   u <- matrix(0,nrow(data),nrow(vi))
@@ -157,14 +146,17 @@ uij <- function(data,vi,m,distance,order=2) {
   return(res)
 }
 
-#' @export
+#' @rdname fgwcuv
 ##menentukan cluster dari data
 determine_cluster <- function(data,uij) {
 	clust = apply(uij,1,which.max)
 	return(cbind.data.frame(data,cluster=clust))
 }
 
-#' @export
+#' @rdname fgwcuv
+#' @param old_uij the old membership matrix
+#' @param dist the distance matrix
+#' @param beta the spatial configuration effect
 ##memodifikasi matriks keanggotaan dengan memanfaatkan matriks jarak dan populasi
 renew_uij <- function(data,old_uij,mi.mj,dist,alpha,beta,a,b) {
   diag(dist) <- Inf
@@ -176,7 +168,8 @@ renew_uij <- function(data,old_uij,mi.mj,dist,alpha,beta,a,b) {
   return(new_uij)
 }
 
-#' @export
+#' @rdname fgwcuv
+#' @param n rows of data
 ##generate matrik keanggotaan
 gen_uij <- function(data,ncluster,n,randomN) {
   set.seed(randomN)
@@ -184,7 +177,8 @@ gen_uij <- function(data,ncluster,n,randomN) {
   return(uij/rowSums(uij))
 }
 
-#' @export
+#' @rdname fgwcuv
+#' @param gendist either \code{"uniform"} or \code{"normal"}. The centroid distribution.
 ##generate pusat cluster
 gen_vi <- function(data,ncluster,gendist,randomN) {##generate centroid
   p <- ncol(data)
@@ -201,7 +195,7 @@ gen_vi <- function(data,ncluster,gendist,randomN) {##generate centroid
   return(piclass)
 }
 
-#' @export
+#' @rdname fgwcuv
 ##fungsi objektif
 jfgwcu <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   vi <- (t(uij^m)%*%data/colSums(uij^m))
@@ -209,16 +203,19 @@ jfgwcu <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   return(sum((uij^m)*d))
 }
 
-#' @export
+#' @rdname fgwcuv
+#' @param mi.mj the matrix calculation of population
+#' @param dist the distance matrix
+#' @param beta the spatial configuration effect
 ##fungsi objektif
-jfgwcu2 <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
+jfgwcu2 <- function(data,uij,m,distance,order,mi.mj,dist,alpha,beta,a,b) { ##fungsi objektif fgwc-u
   u <- renew_uij(data,u$u,mi.mj,dist,alpha,beta,a,b)
   vi <- (t(uij^m)%*%data/colSums(uij^m))
   d <- cdist(data,vi,distance,order)^2
   return(sum((uij^m)*d))
 }
 
-#' @export
+#' @rdname fgwcuv
 jfgwcv  <- function(data,vi,m,distance,order) { ##fungsi objektif fgwc-v
   u <- matrix(0,nrow(data),nrow(vi))
   d <- cdist(data,vi,distance,order)^2
@@ -232,7 +229,10 @@ jfgwcv  <- function(data,vi,m,distance,order) { ##fungsi objektif fgwc-v
   return(sum((u^m)*d))
 }
 
-#' @export
+#' @rdname fgwcuv
+#' @param mi.mj the matrix calculation of population
+#' @param dist the distance matrix
+#' @param beta the spatial configuration effect
 jfgwcv2  <- function(data,vi,m,distance,order,mi.mj,dist,alpha,beta,a,b) { ##fungsi objektif fgwc-v
   u <- uij(data,vi,m,distance,order)
   u <- renew_uij(data,u$u,mi.mj,dist,alpha,beta,a,b)

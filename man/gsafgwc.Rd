@@ -2,6 +2,8 @@
 % Please edit documentation in R/gsafgwc.R
 \name{gsafgwc}
 \alias{gsafgwc}
+\alias{force_v}
+\alias{new.move}
 \title{Fuzzy Geographicaly Weighted Clustering with Gravitational Search Algorithm}
 \usage{
 gsafgwc(
@@ -28,6 +30,10 @@ gsafgwc(
   vmax = 0.7,
   new = F
 )
+
+force_v(par, no, G, v, vmax, par.dist, par.order, randomN)
+
+new.move(par, pbest, gbest, randomN)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -35,6 +41,8 @@ gsafgwc(
 \item{pop}{an n*1 vector contains population.}
 
 \item{distmat}{an n*n distance matrix between regions.}
+
+\item{ncluster}{an integer. The number of clusters.}
 
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
@@ -72,11 +80,15 @@ gsafgwc(
 
 \item{new}{using the new algorithm by Li and Dong (2017). Can be defined as \code{new} in \code{opt_param}. Default is \code{FALSE}}
 
-\item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
+\item{par}{the particle position.}
 
-\item{uij}{membership matrix initialisation.}
+\item{no}{The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.}
 
-\item{vi}{centroid matrix initialisation.}
+\item{v}{particle velocity.}
+
+\item{pbest}{the personal particle best position.}
+
+\item{gbest}{the global best position.}
 }
 \value{
 an object of class \code{'fgwc'}.\cr

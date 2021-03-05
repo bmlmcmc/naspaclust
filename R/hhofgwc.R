@@ -3,7 +3,7 @@
 #' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
 #' @param pop an n*1 vector contains population.
 #' @param distmat an n*n distance matrix between regions.
-#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
 #' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
 #' @param order, minkowski order. default is 2.
@@ -13,12 +13,11 @@
 #' @param max.iter maximum iteration. Default is 500.
 #' @param error error tolerance. Default is 1e-5.
 #' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
-#' @param uij membership matrix initialisation.
-#' @param vi centroid matrix initialisation.
 #' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
 #' @param nhh number of harris-hawk eagles. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
 #' @param hh.alg String between default is \code{'heidari'} and default is \code{'bairathi'}. The algorithm for HHO, Can be defined as \code{algo} in \code{opt_param}. default is \code{'heidari'}.
 #' @param A a 3 vectors which represents initial energy and cut-off for exploitation and exploration. In \code{opt_param}, they can be defined as \code{'a1'} for initial energy, \code{'a2'} for exploitation cut-off and \code{'a3'} for exploration cut-off respectively. default is \code{c("a1"=2,"a2"=1,"a3"=0.5)}.
+#' @param p a real number between 0 and 1. The eagle's movement probability
 #' @param hh.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
 #' @param levy.beta The skewness of levy flight. Can be defined as \code{beta} in \code{opt_param}. Default is 1.5
 #' @param update.type An integer. The type of energy \code{A[1]} update. Can be selected from 1 to 5. Can be defined as \code{update.type} in \code{opt_param}. Default is 5.
@@ -146,7 +145,14 @@ hhofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(hho)
 }
 
-#' @export
+#' @rdname hhofgwc
+#' @param hawk the individual hawks position.
+#' @param hawks the whole hawks position.
+#' @param gbest the global best hawk position. 
+#' @param rand the random index.
+#' @param seed the random seed.
+#' @param best the global best hawk index. 
+
 hh.attack.bairathi <- function(hawk,hawks,gbest,A,p,rand,seed,best){
   dd <- dim(hawk)
   set.seed(seed<-seed+10)
@@ -160,7 +166,21 @@ hh.attack.bairathi <- function(hawk,hawks,gbest,A,p,rand,seed,best){
   else return((gbest-hawk)-c1*(c2*gbest-hawk)) ##global exploitation
 }
 
-#' @export
+#' @rdname hhofgwc
+#' @param hawk the individual hawks position.
+#' @param hawks the whole hawks position.
+#' @param rabbit the global best hawk position (rabbit position).
+#' @param E the current energy
+#' @param gbest the global best hawk position. 
+#' @param rand the random index.
+#' @param seed the random seed.
+#' @param best the global best hawk index.
+#' @param worst the global worst hawk index.
+#' @param fithawk the hawk fitness. 
+#' @param mi.mj the matrix calculation of population
+#' @param dist the distance matrix
+#' @param beta the spatial configuration effect
+
 hh.attack.heidari <- function(hawk,hawks,rabbit,E,A,p,rand,levy.beta,seed,best,worst,fithawk,data,m,
 	distance,order,mi.mj,dist,alpha,beta,a,b){
 	set.seed(seed<-seed+10)
@@ -201,7 +221,11 @@ hh.attack.heidari <- function(hawk,hawks,rabbit,E,A,p,rand,levy.beta,seed,best,w
 	}	
 }
 
-#' @export
+#' @rdname hhofgwc
+#' @param n number of observations.
+#' @param beta The skewness of levy flight.
+#' @param seed the random number.
+
 rlevy <- function(n,beta,seed){
   set.seed(seed+100)
   u <- runif(n)

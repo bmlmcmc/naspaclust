@@ -2,6 +2,16 @@
 % Please edit documentation in R/fgwc.R
 \name{fgwcuv}
 \alias{fgwcuv}
+\alias{vi}
+\alias{uij}
+\alias{determine_cluster}
+\alias{renew_uij}
+\alias{gen_uij}
+\alias{gen_vi}
+\alias{jfgwcu}
+\alias{jfgwcu2}
+\alias{jfgwcv}
+\alias{jfgwcv2}
 \title{Classical Fuzzy Geographicaly Weighted Clustering}
 \usage{
 fgwcuv(
@@ -22,6 +32,26 @@ fgwcuv(
   uij = NA,
   vi = NA
 )
+
+vi(data, uij, m)
+
+uij(data, vi, m, distance, order = 2)
+
+determine_cluster(data, uij)
+
+renew_uij(data, old_uij, mi.mj, dist, alpha, beta, a, b)
+
+gen_uij(data, ncluster, n, randomN)
+
+gen_vi(data, ncluster, gendist, randomN)
+
+jfgwcu(data, uij, m, distance, order)
+
+jfgwcu2(data, uij, m, distance, order, mi.mj, dist, alpha, beta, a, b)
+
+jfgwcv(data, vi, m, distance, order)
+
+jfgwcv2(data, vi, m, distance, order, mi.mj, dist, alpha, beta, a, b)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -31,6 +61,8 @@ fgwcuv(
 \item{distmat}{an n*n distance matrix between regions.}
 
 \item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
+
+\item{ncluster}{an integer. The number of clusters.}
 
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
@@ -53,6 +85,18 @@ fgwcuv(
 \item{uij}{membership matrix initialisation.}
 
 \item{vi}{centroid matrix initialisation.}
+
+\item{old_uij}{the old membership matrix}
+
+\item{mi.mj}{the matrix calculation of population}
+
+\item{dist}{the distance matrix}
+
+\item{beta}{the spatial configuration effect}
+
+\item{n}{rows of data}
+
+\item{gendist}{either \code{"uniform"} or \code{"normal"}. The centroid distribution.}
 }
 \value{
 an object of class \code{"fgwc"}.\cr
@@ -91,5 +135,5 @@ res1 <- fgwcuv(census2010,census2010pop,census2010dist,'u',3,2,'euclidean',4)
 \insertAllCited{}
 }
 \seealso{
-\code{\link{fpafgwc,ifafgwc}}
+\code{\link{abcfgwc}} \code{\link{fpafgwc}} \code{\link{gsafgwc}} \code{\link{hhofgwc}} \code{\link{ifafgwc}} \code{\link{psofgwc}} \code{\link{tlbofgwc}}
 }

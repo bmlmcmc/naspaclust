@@ -2,6 +2,9 @@
 % Please edit documentation in R/hhofgwc.R
 \name{hhofgwc}
 \alias{hhofgwc}
+\alias{hh.attack.bairathi}
+\alias{hh.attack.heidari}
+\alias{rlevy}
 \title{Fuzzy Geographicaly Weighted Clustering with Harris-Hawk Optimization}
 \usage{
 hhofgwc(
@@ -27,6 +30,35 @@ hhofgwc(
   levy.beta = 1.5,
   update.type = 5
 )
+
+hh.attack.bairathi(hawk, hawks, gbest, A, p, rand, seed, best)
+
+hh.attack.heidari(
+  hawk,
+  hawks,
+  rabbit,
+  E,
+  A,
+  p,
+  rand,
+  levy.beta,
+  seed,
+  best,
+  worst,
+  fithawk,
+  data,
+  m,
+  distance,
+  order,
+  mi.mj,
+  dist,
+  alpha,
+  beta,
+  a,
+  b
+)
+
+rlevy(n, beta, seed)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -34,6 +66,8 @@ hhofgwc(
 \item{pop}{an n*1 vector contains population.}
 
 \item{distmat}{an n*n distance matrix between regions.}
+
+\item{ncluster}{an integer. The number of clusters.}
 
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
@@ -61,17 +95,41 @@ hhofgwc(
 
 \item{A}{a 3 vectors which represents initial energy and cut-off for exploitation and exploration. In \code{opt_param}, they can be defined as \code{'a1'} for initial energy, \code{'a2'} for exploitation cut-off and \code{'a3'} for exploration cut-off respectively. default is \code{c("a1"=2,"a2"=1,"a3"=0.5)}.}
 
+\item{p}{a real number between 0 and 1. The eagle's movement probability}
+
 \item{hh.same}{number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.}
 
 \item{levy.beta}{The skewness of levy flight. Can be defined as \code{beta} in \code{opt_param}. Default is 1.5}
 
 \item{update.type}{An integer. The type of energy \code{A[1]} update. Can be selected from 1 to 5. Can be defined as \code{update.type} in \code{opt_param}. Default is 5.}
 
-\item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
+\item{hawk}{the individual hawks position.}
 
-\item{uij}{membership matrix initialisation.}
+\item{hawks}{the whole hawks position.}
 
-\item{vi}{centroid matrix initialisation.}
+\item{gbest}{the global best hawk position.}
+
+\item{rand}{the random index.}
+
+\item{seed}{the random number.}
+
+\item{best}{the global best hawk index.}
+
+\item{rabbit}{the global best hawk position (rabbit position).}
+
+\item{E}{the current energy}
+
+\item{worst}{the global worst hawk index.}
+
+\item{fithawk}{the hawk fitness.}
+
+\item{mi.mj}{the matrix calculation of population}
+
+\item{dist}{the distance matrix}
+
+\item{beta}{The skewness of levy flight.}
+
+\item{n}{number of observations.}
 }
 \value{
 an object of class \code{'fgwc'}.\cr

@@ -42,7 +42,7 @@
 #' as well as the intelligent improvement by \insertCite{intfa;textual}{naspaclust} \insertCite{@see also @Nasution2020 for FGWC implementation}{naspaclust}.
 #' \item \code{"pso"} - Optimization using particle swarm optimization based on \insertCite{Runkler2006;textual}{naspaclust} and 
 #' \insertCite{Bansal2011;textual}{naspaclust} for inertia option \insertCite{@see also @fgwcpso; @putra2017; @Abdussamad for FGWC implementation}{naspaclust}.
-#' \item \code{"tlbo"} - Optimization using teaching-learning based optimization based on \insertCite{Rao2012;textual}{naspaclust} and 
+#' \item \code{"tlbo"} - Optimization using teaching - learning based optimization based on \insertCite{Rao2012;textual}{naspaclust} and 
 #' elitism improvement by \insertCite{Rao2012b;textual}{naspaclust}.
 #' }
 #' Furthermore, there are 10 distance that can be used to calculate the membership (see \code{\link{cdist}} for details).
@@ -182,7 +182,8 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
     
 }
 
-#' @export
+#' @rdname fgwc
+#' @param param the optimisation parameter
 get_param_abc <- function(param){
     paramx <- c()
     if(is.na(param['n.onlooker'])|param['n.onlooker']<0) paramx['n.onlooker'] <- 5 else paramx['n.onlooker'] <- param['n.onlooker']
@@ -190,7 +191,8 @@ get_param_abc <- function(param){
     return(paramx)
 }
 
-#' @export
+#' @rdname fgwc
+#' @param param the optimisation parameter
 get_param_fpa <- function(param){
     paramx <- c()
     if(is.na(param['p'])|param['p']<0|param['p']>1) paramx['p'] <- 0.8 else paramx['p'] <- param['p']
@@ -200,7 +202,8 @@ get_param_fpa <- function(param){
     return(paramx)
 }
 
-#' @export
+#' @rdname fgwc
+#' @param param the optimisation parameter
 get_param_gsa <- function(param){
     paramx <- c()
     if(is.na(param['G'])|param['G']<0) paramx['G'] <- 1 else paramx['G'] <- param['G']
@@ -208,7 +211,8 @@ get_param_gsa <- function(param){
     return(paramx)
 }
 
-#' @export
+#' @rdname fgwc
+#' @param param the optimisation parameter
 get_param_hho <- function(param){
     paramx <- c()
     if(is.na(param['algo'])|!param['algo']%in%c('heidari','bairathi')) paramx['algo'] <- 'heidari' else paramx['algo'] <- param['algo']
@@ -221,7 +225,8 @@ get_param_hho <- function(param){
     return(paramx)
 }
 
-#' @export
+#' @rdname fgwc
+#' @param param the optimisation parameter
 get_param_ifa <- function(param){
     paramx <- c()
     if(is.na(param['gamma'])|param['gamma']<0) paramx['gamma'] <- 1 else paramx['gamma'] <- param['gamma']
@@ -231,7 +236,8 @@ get_param_ifa <- function(param){
     return(paramx)
 }
 
-#' @export
+#' @rdname fgwc
+#' @param param the optimisation parameter
 get_param_pso <- function(param){
     paramx <- c()
     if(is.na(param['c1'])|param['c1']<0) paramx['c1'] <- 0.49 else paramx['c1'] <- param['c1']
@@ -239,7 +245,8 @@ get_param_pso <- function(param){
     return(paramx)
 }
 
-#' @export
+#' @rdname fgwc
+#' @param param the optimisation parameter
 get_param_tlbo <- function(param){
     paramx <- c()
     if(is.na(param['nselection'])|param['nselection']<0) paramx['nselection'] <- 10 else paramx['nselection'] <- param['nselection']

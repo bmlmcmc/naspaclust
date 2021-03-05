@@ -1,9 +1,9 @@
-#' Fuzzy Geographicaly Weighted Clustering with Teaching-Learning Based Optimization
-#' @description Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Teaching-Learning Based Algorithm.
+#' Fuzzy Geographicaly Weighted Clustering with Teaching - Learning Based Optimization
+#' @description Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Teaching - Learning Based Algorithm.
 #' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
 #' @param pop an n*1 vector contains population.
 #' @param distmat an n*n distance matrix between regions.
-#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
 #' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
 #' @param order, minkowski order. default is 2.
@@ -13,8 +13,6 @@
 #' @param max.iter maximum iteration. Default is 500.
 #' @param error error tolerance. Default is 1e-5.
 #' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
-#' @param uij membership matrix initialisation.
-#' @param vi centroid matrix initialisation.
 #' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
 #' @param nstud number of students. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
 #' @param tlbo.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}. Default is 10.
@@ -40,7 +38,7 @@
 
 #' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-#' the Teaching-Learning Based Optimization was developed by \insertCite{Rao2012;textual}{naspaclust} and Developed by \insertCite{Rao2012b;textual}{naspaclust} 
+#' the Teaching - Learning Based Optimization was developed by \insertCite{Rao2012;textual}{naspaclust} and Developed by \insertCite{Rao2012b;textual}{naspaclust} 
 #' by adding the elitism algorithm in order to get a more optimal solution of a certain complex function.
 
 #' @references

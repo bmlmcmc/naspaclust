@@ -2,6 +2,10 @@
 % Please edit documentation in R/ifafgwc.R
 \name{ifafgwc}
 \alias{ifafgwc}
+\alias{init.swarm}
+\alias{intel.ffly}
+\alias{swarm_dist}
+\alias{moving}
 \title{Fuzzy Geographicaly Weighted Clustering with (Intelligent) Firefly Algorithm}
 \usage{
 ifafgwc(
@@ -35,6 +39,53 @@ ifafgwc(
   scale.levy = 1,
   ffly.alpha.type = 4
 )
+
+init.swarm(
+  data,
+  pop,
+  distmat,
+  distance,
+  order,
+  vi.dist,
+  ncluster,
+  m,
+  alpha,
+  a,
+  b,
+  randomN,
+  nfly
+)
+
+intel.ffly(ffly.list, no)
+
+swarm_dist(swarm1, swarm2, distance, order)
+
+moving(
+  ffly.all,
+  no,
+  ff.beta,
+  gamma,
+  ff.alpha,
+  ffly.dist,
+  ffly.order,
+  ei.distr,
+  r.chaotic,
+  m.chaotic,
+  ind.levy,
+  skew.levy,
+  sca.levy,
+  data,
+  m,
+  distance,
+  order,
+  mi.mj,
+  dist,
+  alpha,
+  beta,
+  a,
+  b,
+  randomN
+)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -42,6 +93,8 @@ ifafgwc(
 \item{pop}{an n*1 vector contains population.}
 
 \item{distmat}{an n*n distance matrix between regions.}
+
+\item{ncluster}{an integer. The number of clusters.}
 
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
@@ -75,7 +128,7 @@ ifafgwc(
 
 \item{ffly.order}{The minkowski order of the \code{par.dist} if \code{par.dist='minkowski'}. Can be defined as \code{par.order=} in \code{opt_param}. Default is 2}
 
-\item{gamma}{distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.}
+\item{gamma}{distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}.}
 
 \item{ffly.beta}{. attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.}
 
@@ -93,11 +146,27 @@ ifafgwc(
 
 \item{ffly.alpha.type}{An integer. The type of \code{ffly.alpha} update. Can be selected from 1 to 5. Can be defined as \code{update_type} in \code{opt_param}. Default is 4.}
 
-\item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
+\item{ffly.list}{the position of the fireflies}
 
-\item{uij}{membership matrix initialisation.}
+\item{no}{The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.}
 
-\item{vi}{centroid matrix initialisation.}
+\item{swarm1}{the position of the first firefly}
+
+\item{swarm2}{the position of the second firefly}
+
+\item{ffly.all}{all current fireflies}
+
+\item{ff.beta}{. attractiveness constant. Can be defined as \code{beta} in \code{opt_param}.}
+
+\item{ff.alpha}{number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.}
+
+\item{sca.levy}{Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}.}
+
+\item{mi.mj}{the matrix calculation of population}
+
+\item{dist}{the distance matrix}
+
+\item{beta}{the spatial configuration effect}
 }
 \value{
 an object of class \code{'fgwc'}.\cr
@@ -138,8 +207,9 @@ param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 ## tune the IFA parameter
 ifa_param <- c(vi.dist='uniform', ei.distr='logchaotic',
-					fa.same=10, npar=15, par.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
-          ffly.alpha=1, r.chaotic=4,update_type=4) 
+					fa.same=10, npar=15, par.no=3, ffly.dist='minkowski', 
+           ffly.order=4, gamma=1, ffly.beta=1.5,
+           ffly.alpha=1, r.chaotic=4,update_type=4) 
 ##FGWC with IFA
 res2 <- fgwc(census2010,census2010pop,census2010dist,'ifa',param_fgwc,ifa_param)
 }

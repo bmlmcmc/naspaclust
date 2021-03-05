@@ -1,4 +1,11 @@
-#' @export
+#' Fuzzy Clustering indices
+#' @description Fuzzy Clustering Index calculation using various literatures
+#' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
+#' @param cluster a vector. The Clustering results.
+#' @param uij membership matrix.
+#' @param vi centroid matrix.
+#' @param a the logarithm base for CE index
+#' @param m fuzzifier
 
 ##penghitungan index
 index_fgwc <- function(data,cluster,uij,vi,m,a=exp(1)) {
@@ -17,19 +24,19 @@ index_fgwc <- function(data,cluster,uij,vi,m,a=exp(1)) {
 #################VALIDATION MEASUREMENT#################
 ########################################################
 
-#' @export
+#' @rdname index_fgwc
 ##kelompok yang optimum dinyatakan dengan nilai PC yang maksimum.
 PC1 <- function(uij) {
   return(sum(uij^2)/nrow(uij))
 }
 
-#' @export
+#' @rdname index_fgwc
 ##kelompok yang optimum dinyatakan dengan nilai indeks CE yang minimum.
 CE1 <- function(uij,a=exp(1)) {##
   return(sum(uij*log(uij,a))/(-nrow(uij)))
 }
 
-#' @export
+#' @rdname index_fgwc
 ##Partisi yang optimum dinyatakan dengan nilai indeks SC yang minimum.
 SC1 <- function(data,cluster,uij,vi,m) {
   d <- matrix(0,nrow(data),nrow(vi))
@@ -51,7 +58,7 @@ SC1 <- function(data,cluster,uij,vi,m) {
   return(sum(pt1/pt2))
 }
 
-#' @export
+#' @rdname index_fgwc
 ##Jumlah kelompok yang optimum dinyatakan dengan nilai indeks S yang minimum.
 SI1 <- function(data,uij,vi) {
   d <- matrix(0,nrow(data),nrow(vi))
@@ -72,7 +79,7 @@ SI1 <- function(data,uij,vi) {
   return(sum(pt1/pt2))
 }
 
-#' @export
+#' @rdname index_fgwc
 ##Jumlah kelompok yang optimal dinyatakan dengan nilai XB yang minimum.
 XB1 <- function(data,uij,vi,m) {
   d <- matrix(0,nrow(data),nrow(vi))
@@ -89,7 +96,7 @@ XB1 <- function(data,uij,vi,m) {
   return(pt1/pt2)
 }
 
-#' @export
+#' @rdname index_fgwc
 ##Ketika nilai IFV maksimum maka kualitas cluster semakin baik.
 IFV1 <- function(data,uij,vi,m) {
   vkvi <- matrix(0,nrow(vi),nrow(vi))
@@ -112,7 +119,7 @@ IFV1 <- function(data,uij,vi,m) {
   return(sum(u2ij*((log(nrow(vi),2)-log2u)^2)/nrow(data)*(SDmax/sigmaD)))
 }
 
-#' @export
+#' @rdname index_fgwc
 ##Ketika nilai Kwon minimum maka kualitas cluster semakin baik.
 Kwon1 <- function(data,uij,vi,m) {
   d <- matrix(0,nrow(data),nrow(vi))

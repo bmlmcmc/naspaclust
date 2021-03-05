@@ -3,7 +3,7 @@
 #' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
 #' @param pop an n*1 vector contains population.
 #' @param distmat an n*n distance matrix between regions.
-#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
 #' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
 #' @param order, minkowski order. default is 2.
@@ -13,8 +13,6 @@
 #' @param max.iter maximum iteration. Default is 500.
 #' @param error error tolerance. Default is 1e-5.
 #' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
-#' @param uij membership matrix initialisation.
-#' @param vi centroid matrix initialisation.
 #' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
 #' @param ei.distr distribution of random walk parameter. Can be defined as \code{ei.distr} in \code{opt_param}.
 #' @param fa.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
@@ -70,8 +68,9 @@
 #'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 #' ## tune the IFA parameter
 #' ifa_param <- c(vi.dist='uniform', ei.distr='logchaotic',
-#'						fa.same=10, npar=15, par.no=3, ffly.dist='minkowski', ffly.order=4, gamma=1, ffly.beta=1.5,
-#'           ffly.alpha=1, r.chaotic=4,update_type=4) 
+#'						fa.same=10, npar=15, par.no=3, ffly.dist='minkowski', 
+#'            ffly.order=4, gamma=1, ffly.beta=1.5,
+#'            ffly.alpha=1, r.chaotic=4,update_type=4) 
 #' ##FGWC with IFA
 #' res2 <- fgwc(census2010,census2010pop,census2010dist,'ifa',param_fgwc,ifa_param)
 
@@ -119,7 +118,7 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
     ffly.alpha <- update_alpha(ffly.alpha,gen,max.iter,ffly.alpha.type)
     set.seed(randomN)
     ffly.swarm <- ffly.new$centroid <- moving(ffly.new,ffly.no,ffly.beta,gamma,ffly.alpha,ffly.dist,ffly.order,ei.distr,
-      r.chaotic,m.chaotic,ind.levy,skew.levy,sca.levy,data,m,distance,order,mi.mj,distmat,alpha,beta,a,b,randomN)
+      r.chaotic,m.chaotic,ind.levy,skew.levy,scale.levy,data,m,distance,order,mi.mj,distmat,alpha,beta,a,b,randomN)
     ffly.other <- ffly.new$membership <- lapply(1:nfly, function(x) uij(data,ffly.swarm[[x]],m,distance,order))
     ffly.other <- ffly.new$membership <- lapply(1:nfly, function(x) renew_uij(data,ffly.new$membership[[x]]$u,mi.mj,distmat,alpha,beta,a,b))
     ffly.swarm <- ffly.new$centroid <- lapply(1:nfly, function(x) vi(data,ffly.new$membership[[x]],m))
@@ -164,7 +163,7 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
   return (ifa)
 }
 
-#' @export
+#' @rdname ifafgwc
 init.swarm <- function(data, pop, distmat, distance, order, vi.dist, ncluster,
                         m, alpha, a, b, randomN, nfly) {
   inten <- rep(0,nfly)
@@ -179,7 +178,9 @@ init.swarm <- function(data, pop, distmat, distance, order, vi.dist, ncluster,
   return(result)
 }
 
-#' @export
+#' @rdname ifafgwc
+#' @param ffly.list the position of the fireflies
+#' @param no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.
 intel.ffly <- function(ffly.list,no) {
   best <- order(ffly.list$I,decreasing = F)[1:no]
   intel.uij <- lapply(best, function(x) ffly.list$membership[[x]])
@@ -189,7 +190,10 @@ intel.ffly <- function(ffly.list,no) {
   return(result)
 }
 
-#' @export
+#' @rdname ifafgwc
+#' @param swarm1 the position of the first firefly
+#' @param swarm2 the position of the second firefly
+
 swarm_dist <- function (swarm1,swarm2,distance,order) {
   # jarak<-rep(0,nrow(swarm1))
   # for (i in 1:nrow(swarm1)) {
@@ -199,7 +203,17 @@ swarm_dist <- function (swarm1,swarm2,distance,order) {
   return(diag(dist(swarm1,swarm2,distance,order)))
 }
 
-#' @export
+#' @rdname ifafgwc
+#' @param ffly.all all current fireflies
+#' @param no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.
+#' @param gamma distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}.
+#' @param ff.beta . attractiveness constant. Can be defined as \code{beta} in \code{opt_param}.
+#' @param ff.alpha number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.
+#' @param sca.levy Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}.
+#' @param mi.mj the matrix calculation of population
+#' @param dist the distance matrix
+#' @param beta the spatial configuration effect
+
 moving <- function(ffly.all,no,ff.beta,gamma,ff.alpha,ffly.dist,ffly.order,ei.distr,r.chaotic,m.chaotic,ind.levy,skew.levy,sca.levy,
                   data,m,distance,order,mi.mj,dist,alpha,beta,a,b,randomN){##menggerakkan firefly
   times <- 0

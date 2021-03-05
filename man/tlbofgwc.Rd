@@ -2,7 +2,7 @@
 % Please edit documentation in R/tlbofgwc.R
 \name{tlbofgwc}
 \alias{tlbofgwc}
-\title{Fuzzy Geographicaly Weighted Clustering with Teaching-Learning Based Optimization}
+\title{Fuzzy Geographicaly Weighted Clustering with Teaching - Learning Based Optimization}
 \usage{
 tlbofgwc(
   data,
@@ -33,6 +33,8 @@ tlbofgwc(
 
 \item{distmat}{an n*n distance matrix between regions.}
 
+\item{ncluster}{an integer. The number of clusters.}
+
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
 \item{distance}{the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.}
@@ -62,12 +64,6 @@ tlbofgwc(
 \item{elitism}{wheter to use elitism algorithm or not. Either \code{TRUE} or \code{FALSE}. Can be defined as \code{elitism=} in \code{opt_param}. Default is \code{FALSE}.}
 
 \item{n.elite}{Number of elitist students. Can be defined as \code{n.elite=} in \code{opt_param}. Default is 2.}
-
-\item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
-
-\item{uij}{membership matrix initialisation.}
-
-\item{vi}{centroid matrix initialisation.}
 }
 \value{
 an object of class \code{'fgwc'}.\cr
@@ -87,12 +83,12 @@ SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{
 }
 }
 \description{
-Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Teaching-Learning Based Algorithm.
+Fuzzy clustering with addition of spatial configuration of membership matrix with centroid optimization using Teaching - Learning Based Algorithm.
 }
 \details{
 Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
-the Teaching-Learning Based Optimization was developed by \insertCite{Rao2012;textual}{naspaclust} and Developed by \insertCite{Rao2012b;textual}{naspaclust} 
+the Teaching - Learning Based Optimization was developed by \insertCite{Rao2012;textual}{naspaclust} and Developed by \insertCite{Rao2012b;textual}{naspaclust} 
 by adding the elitism algorithm in order to get a more optimal solution of a certain complex function.
 }
 \examples{

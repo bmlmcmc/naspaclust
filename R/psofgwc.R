@@ -3,7 +3,7 @@
 #' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
 #' @param pop an n*1 vector contains population.
 #' @param distmat an n*n distance matrix between regions.
-#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
 #' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
 #' @param order, minkowski order. default is 2.
@@ -13,8 +13,6 @@
 #' @param max.iter maximum iteration. Default is 500.
 #' @param error error tolerance. Default is 1e-5.
 #' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
-#' @param uij membership matrix initialisation.
-#' @param vi centroid matrix initialisation.
 #' @param vi.dist a string of centroid population distribution between \code{'uniform'} (default) and \code{'normal'}. Can be defined as \code{vi.dist=} in \code{opt_param}.
 #' @param npar number of particles. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
 #' @param vmax maximum velocity to be tolerated. Can be defined as \code{vmax} in \code{opt_param}. Default is 0.7

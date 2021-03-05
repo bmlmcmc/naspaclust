@@ -2,6 +2,7 @@
 % Please edit documentation in R/fpafgwc.R
 \name{fpafgwc}
 \alias{fpafgwc}
+\alias{pollination}
 \title{Fuzzy Geographicaly Weighted Clustering with Flower Pollination Algorithm}
 \usage{
 fpafgwc(
@@ -31,6 +32,21 @@ fpafgwc(
   skew = 0,
   sca = 1
 )
+
+pollination(
+  flow,
+  p,
+  pollen,
+  gamma,
+  lambda,
+  delta,
+  seed,
+  ei.distr,
+  r,
+  m,
+  skew,
+  sca
+)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -38,6 +54,8 @@ fpafgwc(
 \item{pop}{an n*1 vector contains population.}
 
 \item{distmat}{an n*n distance matrix between regions.}
+
+\item{ncluster}{an integer. The number of clusters.}
 
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
@@ -81,11 +99,11 @@ fpafgwc(
 
 \item{sca}{Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}.}
 
-\item{kind}{use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.}
+\item{flow}{the flower position (centroid)}
 
-\item{uij}{membership matrix initialisation.}
+\item{pollen}{the best flower}
 
-\item{vi}{centroid matrix initialisation.}
+\item{seed}{the random number}
 }
 \value{
 an object of class \code{"fgwc"}.\cr
@@ -124,7 +142,8 @@ res1 <- fpafgwc(census2010,census2010pop,census2010dist,3,2,'euclidean',4,nflow=
 param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 ## tune the FPA parameter
-fpa_param <- c(vi.dist='normal',npar=5,same=15,p=0.7,gamma=1.2,lambda=1.5,ei.distr='logchaotic',chaos=3) 
+fpa_param <- c(vi.dist='normal',npar=5,same=15,p=0.7,
+               gamma=1.2,lambda=1.5,ei.distr='logchaotic',chaos=3) 
 ##FGWC with FPA
 res2 <- fgwc(census2010,census2010pop,census2010dist,'fpa',param_fgwc,fpa_param)
 }

@@ -3,7 +3,7 @@
 #' @param data an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.
 #' @param pop an n*1 vector contains population.
 #' @param distmat an n*n distance matrix between regions.
-#' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
+#' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
 #' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
 #' @param order, minkowski order. default is 2.
@@ -13,8 +13,6 @@
 #' @param max.iter maximum iteration. Default is 500.
 #' @param error error tolerance. Default is 1e-5.
 #' @param randomN random seed for initialisation (if uij or vi is NA). Default is 0.
-#' @param uij membership matrix initialisation.
-#' @param vi centroid matrix initialisation.
 #' @param vi.dist a string of centroid population distribution between \code{"uniform"} (default) and \code{"normal"}. Can be defined as \code{vi.dist=} in \code{opt_param}.
 #' @param nflow number of flowers population. Can be defined as \code{npar=} in \code{opt_param}. Default is 10.
 #' @param p switch probability between global and local pollination, Can be defined as \code{p} in \code{opt_param}. default is 0.8.
@@ -61,7 +59,8 @@
 #' param_fgwc <- c(kind='v',ncluster=3,m=2,distance='minkowski',order=3,
 #'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 #' ## tune the FPA parameter
-#' fpa_param <- c(vi.dist='normal',npar=5,same=15,p=0.7,gamma=1.2,lambda=1.5,ei.distr='logchaotic',chaos=3) 
+#' fpa_param <- c(vi.dist='normal',npar=5,same=15,p=0.7,
+#'                gamma=1.2,lambda=1.5,ei.distr='logchaotic',chaos=3) 
 #' ##FGWC with FPA
 #' res2 <- fgwc(census2010,census2010pop,census2010dist,'fpa',param_fgwc,fpa_param)
 
@@ -69,6 +68,7 @@
 #' @import beepr
 #' @import stabledist
 #' @import rdist
+#' @import stats
 
 fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclidean', order=2, alpha=0.7, a=1, b=1,
 					error=1e-5, max.iter=100, randomN=0, vi.dist="uniform", nflow=10, p=0.8, gamma=1, lambda=1.5, delta=0,
@@ -105,7 +105,7 @@ fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   	best <- minmax[1]
   	worst <- minmax[2]
   	pollen <- flow.finalpos
-    flow.swarm <- pollination(flow.swarm,p,pollen,gamma,lambda,delta,randomN,ei.distr,r,m.chaotic,ind,skew,sca)
+    flow.swarm <- pollination(flow.swarm,p,pollen,gamma,lambda,delta,randomN,ei.distr,r,m.chaotic,skew,sca)
     flow.other <- lapply(1:nflow, function(x) uij(data,flow.swarm[[x]],m,distance,order))
   	flow.other <- lapply(1:nflow, function(x) renew_uij(data,flow.other[[x]]$u,mi.mj,distmat,alpha,beta,a,b))
   	flow.swarm <- lapply(1:nflow, function(x) vi(data,flow.other[[x]],m))
@@ -136,8 +136,12 @@ fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(fpa)
 }
 
-#' @export
-pollination <- function(flow,p,pollen,gamma,lambda,delta,seed,ei.distr,r,m,ind,skew,sca){
+#' @rdname fpafgwc
+#' @param flow the flower position (centroid)
+#' @param pollen the best flower
+#' @param seed the random number
+
+pollination <- function(flow,p,pollen,gamma,lambda,delta,seed,ei.distr,r,m,skew,sca){
   set.seed(seed<-seed+10)
   rand <- runif(length(flow))
   dd <- dim(pollen)
