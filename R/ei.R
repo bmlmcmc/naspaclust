@@ -1,14 +1,3 @@
-#' Noise distributions 
-#' @description Generating various distributions for noise in optimisation algorithm
-#' @param distr the distribution between \code{"normal"}, \code{"uniform"}, \code{"levy"}, \code{logchaotic}, \code{kentchaotic}
-#' @param n number of observations.
-#' @param randomN random seed for initialisation.
-#' @param r weight in logistic chaotic between [0,4]. Can be used when \code{ei.distr='logchaotic'}. Can be defined as \code{chaos} in \code{opt_param}. Default is 4.
-#' @param m mapping parameter in kent chaotic between [0,1]. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.7.
-#' @param ind Levy distribution index for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{ind} in \code{opt_param}. Default is 1.
-#' @param skew Levy distribution skewness for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{skew} in \code{opt_param}. Default is 0.
-#' @param sca Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}. Default is 1.
-
 eiDist <- function(distr='normal',n,randomN=40,r=4,m=0.7,ind=1,skew=0,sca=1) {
   set.seed(randomN)
   if(distr=='uniform') {
@@ -29,9 +18,6 @@ eiDist <- function(distr='normal',n,randomN=40,r=4,m=0.7,ind=1,skew=0,sca=1) {
   }
 }
 
-#' @rdname eiDist
-#' @param seed the random number
-
 logchaotic <- function(n,r=4,seed=1) {
   set.seed(seed)
   x0 <- runif(1)
@@ -42,9 +28,6 @@ logchaotic <- function(n,r=4,seed=1) {
   }
   return(x)
 }
-
-#' @rdname eiDist
-#' @param seed the random number
 
 kentchaotic <- function(n,m=0.7,seed) {
   set.seed(seed)
@@ -61,12 +44,6 @@ kentchaotic <- function(n,m=0.7,seed) {
   }
   return(x)
 }
-
-#' @rdname eiDist
-#' @param alpha the current position of alpha
-#' @param iter the current iteration
-#' @param maxiter the maximum iteration
-#' @param type the update type
 
 update_alpha <- function(alpha, iter, maxiter, type) {
   if(type==1) {

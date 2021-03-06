@@ -15,7 +15,7 @@ A dataset containing the 2010 population in Indonesia based on census result.
 }
 \details{
 A vector with 33 elements.\cr
-The dataset was firstly used in \insertCite{Wijayanto2015a}{naspaclust}, \insertCite{fgwcpso}{naspaclust}, \insertCite{fgwcabc1}{naspaclust} and \insertCite{fgwcabc2}{naspaclust}.
+The dataset was firstly used in \insertCite{Wijayanto2015a;textual}{naspaclust}, \insertCite{fgwcpso;textual}{naspaclust}, \insertCite{fgwcabc1}{naspaclust;textual} and \insertCite{fgwcabc2;textual}{naspaclust}.
 }
 \references{
 \insertAllCited{}

@@ -129,13 +129,11 @@ fgwcuv <- function(data, pop, distmat, kind=NA,ncluster=2, m=2, distance='euclid
   return (result)
 }
 
-#' @rdname fgwcuv
 ##vi dari nilai keanggotaan
 vi <- function(data,uij,m) {
   return (t(uij^m)%*%data/colSums(uij^m))
 }
 
-#' @rdname fgwcuv
 ##uij dari centroid
 uij <- function(data,vi,m,distance,order=2) {
   u <- matrix(0,nrow(data),nrow(vi))
@@ -146,17 +144,12 @@ uij <- function(data,vi,m,distance,order=2) {
   return(res)
 }
 
-#' @rdname fgwcuv
 ##menentukan cluster dari data
 determine_cluster <- function(data,uij) {
 	clust = apply(uij,1,which.max)
 	return(cbind.data.frame(data,cluster=clust))
 }
 
-#' @rdname fgwcuv
-#' @param old_uij the old membership matrix
-#' @param dist the distance matrix
-#' @param beta the spatial configuration effect
 ##memodifikasi matriks keanggotaan dengan memanfaatkan matriks jarak dan populasi
 renew_uij <- function(data,old_uij,mi.mj,dist,alpha,beta,a,b) {
   diag(dist) <- Inf
@@ -168,8 +161,6 @@ renew_uij <- function(data,old_uij,mi.mj,dist,alpha,beta,a,b) {
   return(new_uij)
 }
 
-#' @rdname fgwcuv
-#' @param n rows of data
 ##generate matrik keanggotaan
 gen_uij <- function(data,ncluster,n,randomN) {
   set.seed(randomN)
@@ -177,8 +168,6 @@ gen_uij <- function(data,ncluster,n,randomN) {
   return(uij/rowSums(uij))
 }
 
-#' @rdname fgwcuv
-#' @param gendist either \code{"uniform"} or \code{"normal"}. The centroid distribution.
 ##generate pusat cluster
 gen_vi <- function(data,ncluster,gendist,randomN) {##generate centroid
   p <- ncol(data)
@@ -195,7 +184,6 @@ gen_vi <- function(data,ncluster,gendist,randomN) {##generate centroid
   return(piclass)
 }
 
-#' @rdname fgwcuv
 ##fungsi objektif
 jfgwcu <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   vi <- (t(uij^m)%*%data/colSums(uij^m))
@@ -203,10 +191,6 @@ jfgwcu <- function(data,uij,m,distance,order) { ##fungsi objektif fgwc-u
   return(sum((uij^m)*d))
 }
 
-#' @rdname fgwcuv
-#' @param mi.mj the matrix calculation of population
-#' @param dist the distance matrix
-#' @param beta the spatial configuration effect
 ##fungsi objektif
 jfgwcu2 <- function(data,uij,m,distance,order,mi.mj,dist,alpha,beta,a,b) { ##fungsi objektif fgwc-u
   u <- renew_uij(data,u$u,mi.mj,dist,alpha,beta,a,b)
@@ -215,7 +199,6 @@ jfgwcu2 <- function(data,uij,m,distance,order,mi.mj,dist,alpha,beta,a,b) { ##fun
   return(sum((uij^m)*d))
 }
 
-#' @rdname fgwcuv
 jfgwcv  <- function(data,vi,m,distance,order) { ##fungsi objektif fgwc-v
   u <- matrix(0,nrow(data),nrow(vi))
   d <- cdist(data,vi,distance,order)^2
@@ -229,10 +212,6 @@ jfgwcv  <- function(data,vi,m,distance,order) { ##fungsi objektif fgwc-v
   return(sum((u^m)*d))
 }
 
-#' @rdname fgwcuv
-#' @param mi.mj the matrix calculation of population
-#' @param dist the distance matrix
-#' @param beta the spatial configuration effect
 jfgwcv2  <- function(data,vi,m,distance,order,mi.mj,dist,alpha,beta,a,b) { ##fungsi objektif fgwc-v
   u <- uij(data,vi,m,distance,order)
   u <- renew_uij(data,u$u,mi.mj,dist,alpha,beta,a,b)

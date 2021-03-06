@@ -153,11 +153,6 @@ gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(gsa)
 }
 
-#' @rdname gsafgwc
-#' @param par the particle position.
-#' @param no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.
-#' @param v particle velocity.
-
 force_v <- function(par,no,G,v,vmax,par.dist,par.order,randomN){
   dd <- dim(par$centroid[[1]])
   intel.par <- intel.ffly(par,no)
@@ -189,10 +184,6 @@ force_v <- function(par,no,G,v,vmax,par.dist,par.order,randomN){
   return(v)
 }
 
-#' @rdname gsafgwc
-#' @param par the particle position.
-#' @param pbest the personal particle best position.
-#' @param gbest the global best position. 
 new.move <- function(par,pbest,gbest,randomN){ ##Li dan Dong, 2017 GSA new technique
   dd <- dim(par)
   mu <- (par+pbest+gbest)/3

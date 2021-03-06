@@ -2,7 +2,6 @@
 % Please edit documentation in R/fpafgwc.R
 \name{fpafgwc}
 \alias{fpafgwc}
-\alias{pollination}
 \title{Fuzzy Geographicaly Weighted Clustering with Flower Pollination Algorithm}
 \usage{
 fpafgwc(
@@ -31,21 +30,6 @@ fpafgwc(
   m.chaotic = 0.7,
   skew = 0,
   sca = 1
-)
-
-pollination(
-  flow,
-  p,
-  pollen,
-  gamma,
-  lambda,
-  delta,
-  seed,
-  ei.distr,
-  r,
-  m,
-  skew,
-  sca
 )
 }
 \arguments{
@@ -98,12 +82,6 @@ pollination(
 \item{skew}{Levy distribution skewness for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{skew} in \code{opt_param}.}
 
 \item{sca}{Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}.}
-
-\item{flow}{the flower position (centroid)}
-
-\item{pollen}{the best flower}
-
-\item{seed}{the random number}
 }
 \value{
 an object of class \code{"fgwc"}.\cr

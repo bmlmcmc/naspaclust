@@ -163,7 +163,6 @@ ifafgwc <- function (data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
   return (ifa)
 }
 
-#' @rdname ifafgwc
 init.swarm <- function(data, pop, distmat, distance, order, vi.dist, ncluster,
                         m, alpha, a, b, randomN, nfly) {
   inten <- rep(0,nfly)
@@ -178,9 +177,6 @@ init.swarm <- function(data, pop, distmat, distance, order, vi.dist, ncluster,
   return(result)
 }
 
-#' @rdname ifafgwc
-#' @param ffly.list the position of the fireflies
-#' @param no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.
 intel.ffly <- function(ffly.list,no) {
   best <- order(ffly.list$I,decreasing = F)[1:no]
   intel.uij <- lapply(best, function(x) ffly.list$membership[[x]])
@@ -190,10 +186,6 @@ intel.ffly <- function(ffly.list,no) {
   return(result)
 }
 
-#' @rdname ifafgwc
-#' @param swarm1 the position of the first firefly
-#' @param swarm2 the position of the second firefly
-
 swarm_dist <- function (swarm1,swarm2,distance,order) {
   # jarak<-rep(0,nrow(swarm1))
   # for (i in 1:nrow(swarm1)) {
@@ -202,17 +194,6 @@ swarm_dist <- function (swarm1,swarm2,distance,order) {
   # }
   return(diag(dist(swarm1,swarm2,distance,order)))
 }
-
-#' @rdname ifafgwc
-#' @param ffly.all all current fireflies
-#' @param no The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.
-#' @param gamma distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}.
-#' @param ff.beta . attractiveness constant. Can be defined as \code{beta} in \code{opt_param}.
-#' @param ff.alpha number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.
-#' @param sca.levy Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}.
-#' @param mi.mj the matrix calculation of population
-#' @param dist the distance matrix
-#' @param beta the spatial configuration effect
 
 moving <- function(ffly.all,no,ff.beta,gamma,ff.alpha,ffly.dist,ffly.order,ei.distr,r.chaotic,m.chaotic,ind.levy,skew.levy,sca.levy,
                   data,m,distance,order,mi.mj,dist,alpha,beta,a,b,randomN){##menggerakkan firefly

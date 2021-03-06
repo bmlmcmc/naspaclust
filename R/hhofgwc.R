@@ -145,14 +145,6 @@ hhofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(hho)
 }
 
-#' @rdname hhofgwc
-#' @param hawk the individual hawks position.
-#' @param hawks the whole hawks position.
-#' @param gbest the global best hawk position. 
-#' @param rand the random index.
-#' @param seed the random seed.
-#' @param best the global best hawk index. 
-
 hh.attack.bairathi <- function(hawk,hawks,gbest,A,p,rand,seed,best){
   dd <- dim(hawk)
   set.seed(seed<-seed+10)
@@ -165,21 +157,6 @@ hh.attack.bairathi <- function(hawk,hawks,gbest,A,p,rand,seed,best){
   else if(c1>=A[3]) return(hawks[[best]]-c1*(c2*hawks[[best]]-hawk)) ##local exploitation
   else return((gbest-hawk)-c1*(c2*gbest-hawk)) ##global exploitation
 }
-
-#' @rdname hhofgwc
-#' @param hawk the individual hawks position.
-#' @param hawks the whole hawks position.
-#' @param rabbit the global best hawk position (rabbit position).
-#' @param E the current energy
-#' @param gbest the global best hawk position. 
-#' @param rand the random index.
-#' @param seed the random seed.
-#' @param best the global best hawk index.
-#' @param worst the global worst hawk index.
-#' @param fithawk the hawk fitness. 
-#' @param mi.mj the matrix calculation of population
-#' @param dist the distance matrix
-#' @param beta the spatial configuration effect
 
 hh.attack.heidari <- function(hawk,hawks,rabbit,E,A,p,rand,levy.beta,seed,best,worst,fithawk,data,m,
 	distance,order,mi.mj,dist,alpha,beta,a,b){
@@ -220,11 +197,6 @@ hh.attack.heidari <- function(hawk,hawks,rabbit,E,A,p,rand,levy.beta,seed,best,w
 		}
 	}	
 }
-
-#' @rdname hhofgwc
-#' @param n number of observations.
-#' @param beta The skewness of levy flight.
-#' @param seed the random number.
 
 rlevy <- function(n,beta,seed){
   set.seed(seed+100)

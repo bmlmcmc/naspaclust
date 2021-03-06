@@ -136,11 +136,6 @@ fpafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   return(fpa)
 }
 
-#' @rdname fpafgwc
-#' @param flow the flower position (centroid)
-#' @param pollen the best flower
-#' @param seed the random number
-
 pollination <- function(flow,p,pollen,gamma,lambda,delta,seed,ei.distr,r,m,skew,sca){
   set.seed(seed<-seed+10)
   rand <- runif(length(flow))

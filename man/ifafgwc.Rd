@@ -2,10 +2,6 @@
 % Please edit documentation in R/ifafgwc.R
 \name{ifafgwc}
 \alias{ifafgwc}
-\alias{init.swarm}
-\alias{intel.ffly}
-\alias{swarm_dist}
-\alias{moving}
 \title{Fuzzy Geographicaly Weighted Clustering with (Intelligent) Firefly Algorithm}
 \usage{
 ifafgwc(
@@ -38,53 +34,6 @@ ifafgwc(
   skew.levy = 0,
   scale.levy = 1,
   ffly.alpha.type = 4
-)
-
-init.swarm(
-  data,
-  pop,
-  distmat,
-  distance,
-  order,
-  vi.dist,
-  ncluster,
-  m,
-  alpha,
-  a,
-  b,
-  randomN,
-  nfly
-)
-
-intel.ffly(ffly.list, no)
-
-swarm_dist(swarm1, swarm2, distance, order)
-
-moving(
-  ffly.all,
-  no,
-  ff.beta,
-  gamma,
-  ff.alpha,
-  ffly.dist,
-  ffly.order,
-  ei.distr,
-  r.chaotic,
-  m.chaotic,
-  ind.levy,
-  skew.levy,
-  sca.levy,
-  data,
-  m,
-  distance,
-  order,
-  mi.mj,
-  dist,
-  alpha,
-  beta,
-  a,
-  b,
-  randomN
 )
 }
 \arguments{
@@ -128,7 +77,7 @@ moving(
 
 \item{ffly.order}{The minkowski order of the \code{par.dist} if \code{par.dist='minkowski'}. Can be defined as \code{par.order=} in \code{opt_param}. Default is 2}
 
-\item{gamma}{distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}.}
+\item{gamma}{distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.}
 
 \item{ffly.beta}{. attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.}
 
@@ -145,28 +94,6 @@ moving(
 \item{scale.levy}{Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}. Default is 1.}
 
 \item{ffly.alpha.type}{An integer. The type of \code{ffly.alpha} update. Can be selected from 1 to 5. Can be defined as \code{update_type} in \code{opt_param}. Default is 4.}
-
-\item{ffly.list}{the position of the fireflies}
-
-\item{no}{The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.}
-
-\item{swarm1}{the position of the first firefly}
-
-\item{swarm2}{the position of the second firefly}
-
-\item{ffly.all}{all current fireflies}
-
-\item{ff.beta}{. attractiveness constant. Can be defined as \code{beta} in \code{opt_param}.}
-
-\item{ff.alpha}{number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.}
-
-\item{sca.levy}{Levy distribution scale for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{sca} in \code{opt_param}.}
-
-\item{mi.mj}{the matrix calculation of population}
-
-\item{dist}{the distance matrix}
-
-\item{beta}{the spatial configuration effect}
 }
 \value{
 an object of class \code{'fgwc'}.\cr

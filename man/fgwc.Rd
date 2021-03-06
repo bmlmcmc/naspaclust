@@ -2,30 +2,9 @@
 % Please edit documentation in R/mainfunction.R
 \name{fgwc}
 \alias{fgwc}
-\alias{get_param_abc}
-\alias{get_param_fpa}
-\alias{get_param_gsa}
-\alias{get_param_hho}
-\alias{get_param_ifa}
-\alias{get_param_pso}
-\alias{get_param_tlbo}
 \title{Fuzzy Geographicaly Weighted Clustering}
 \usage{
 fgwc(data, pop, distmat, algorithm = "classic", fgwc_param, opt_param)
-
-get_param_abc(param)
-
-get_param_fpa(param)
-
-get_param_gsa(param)
-
-get_param_hho(param)
-
-get_param_ifa(param)
-
-get_param_pso(param)
-
-get_param_tlbo(param)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -39,8 +18,6 @@ get_param_tlbo(param)
 \item{fgwc_param}{a vector that consists of FGWC parameter (see \code{\link{fgwcuv}} for parameter details)}
 
 \item{opt_param}{a vector that consists of optimization algorithm parameter (see \code{\link{fgwcuv}} for parameter details)}
-
-\item{param}{the optimisation parameter}
 }
 \value{
 an object of class \code{"fgwc"}.\cr

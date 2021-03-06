@@ -2,8 +2,6 @@
 % Please edit documentation in R/gsafgwc.R
 \name{gsafgwc}
 \alias{gsafgwc}
-\alias{force_v}
-\alias{new.move}
 \title{Fuzzy Geographicaly Weighted Clustering with Gravitational Search Algorithm}
 \usage{
 gsafgwc(
@@ -30,10 +28,6 @@ gsafgwc(
   vmax = 0.7,
   new = F
 )
-
-force_v(par, no, G, v, vmax, par.dist, par.order, randomN)
-
-new.move(par, pbest, gbest, randomN)
 }
 \arguments{
 \item{data}{an object of data with d>1. Can be \code{matrix} or \code{data.frame}. If your data is univariate, bind it with \code{1} to get a 2 columns.}
@@ -79,16 +73,6 @@ new.move(par, pbest, gbest, randomN)
 \item{vmax}{maximum velocity to be tolerated. Can be defined as \code{vmax} in \code{opt_param}. Default is 0.7}
 
 \item{new}{using the new algorithm by Li and Dong (2017). Can be defined as \code{new} in \code{opt_param}. Default is \code{FALSE}}
-
-\item{par}{the particle position.}
-
-\item{no}{The number of selected best particle. Can be defined as \code{par.no=} in \code{opt_param}.}
-
-\item{v}{particle velocity.}
-
-\item{pbest}{the personal particle best position.}
-
-\item{gbest}{the global best position.}
 }
 \value{
 an object of class \code{'fgwc'}.\cr
