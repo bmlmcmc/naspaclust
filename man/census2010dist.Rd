@@ -15,7 +15,7 @@ A dataset containing the calculated distance between provinces in Indonesia.
 }
 \details{
 A matrix with 33x33 rows.\cr
-The dataset was firstly used in \insertCite{Wijayanto2015a;textual}{naspaclust}, \insertCite{fgwcpso;textual}{naspaclust}, \insertCite{fgwcabc1;textual}{naspaclust} and \insertCite{fgwcabc2;textual}{naspaclust}.
+The dataset was firstly used in \insertCite{Wijayanto2015a;textual}{naspaclust}, \insertCite{fgwcpso;textual}{naspaclust}, \insertCite{fgwcabc1;textual}{naspaclust}, and \insertCite{fgwcabc2;textual}{naspaclust}.
 }
 \references{
 \insertAllCited{}
