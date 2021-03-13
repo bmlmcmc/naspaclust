@@ -72,7 +72,7 @@ gsafgwc(
 
 \item{vmax}{maximum velocity to be tolerated. Can be defined as \code{vmax} in \code{opt_param}. Default is 0.7}
 
-\item{new}{using the new algorithm by Li and Dong (2017). Can be defined as \code{new} in \code{opt_param}. Default is \code{FALSE}}
+\item{new}{Boolean that represents whether to use the new algorithm by Li and Dong (2017). Can be defined as \code{new} in \code{opt_param}. Default is \code{FALSE}}
 }
 \value{
 an object of class \code{'fgwc'}.\cr

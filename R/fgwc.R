@@ -61,13 +61,13 @@ fgwcuv <- function(data, pop, distmat, kind=NA,ncluster=2, m=2, distance='euclid
   ##alpha + beta = 1
   ##m = fuzzifier
   ptm <- proc.time()
-  stopifnot(kind=="v" || kind=="u" || any(is.na(kind))==T)
+  stopifnot(kind=="v" || kind=="u" || any(is.na(kind))==TRUE)
   n <- nrow(data)
   d <- ncol(data)
   beta = 1-alpha
   iter = 0
   conv <- c(0)
-  if (is.matrix(data)==F) {
+  if (is.matrix(data)==FALSE) {
     data <- as.matrix(data)
   }
   ##jika alfa =1, akan menjadi fuzzy c-means,
@@ -81,8 +81,8 @@ fgwcuv <- function(data, pop, distmat, kind=NA,ncluster=2, m=2, distance='euclid
   mi.mj <- pop%*%t(pop)
   ##membaca pendekatan FGWC jika dikosongkan atau u,
   ##pendekatannya akan menjadi matriks keanggotaan, inisialisasi awal matriks keanggotaan
-  if (any(is.na(kind))==T || kind=="u"){ ##fgwc biasa = fgwc u
-    if (any(is.na(uij))==T) {
+  if (any(is.na(kind))==TRUE || kind=="u"){ ##fgwc biasa = fgwc u
+    if (any(is.na(uij))==TRUE) {
       set.seed(randomN)
       uij <- matrix(runif(n*ncluster,0,1),ncol=ncluster)
       new_uij  <- uij/rowSums(uij)

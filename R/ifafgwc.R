@@ -21,8 +21,8 @@
 #' @param ffly.dist The distance between fireflies. Can be defined as \code{par.dist=} in \code{opt_param}. Default is \code{'euclidean'}, 
 #' @param ffly.order The minkowski order of the \code{par.dist} if \code{par.dist='minkowski'}. Can be defined as \code{par.order=} in \code{opt_param}. Default is 2
 #' @param gamma distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.
-#' @param ffly.beta . attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.
-#' @param ffly.alpha number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.
+#' @param ffly.beta Attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.
+#' @param ffly.alpha Randomisation constant. Can be defined as \code{alpha=} in \code{opt_param}.
 #' @param r.chaotic weight in logistic chaotic between [0,4]. Can be used when \code{ei.distr='logchaotic'}. Can be defined as \code{chaos} in \code{opt_param}. Default is 4.
 #' @param m.chaotic mapping parameter in kent chaotic between [0,1]. Can be used when \code{ei.distr='kentchaotic'}. Can be defined as \code{map} in \code{opt_param}. Default is 0.7.
 #' @param ind.levy Levy distribution index for random walk. Can be used when \code{ei.distr='levy'}. Can be defined as \code{ind} in \code{opt_param}. Default is 1.

@@ -19,7 +19,7 @@
 #' @param pso.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
 #' @param c1 Cognitive scaling parameters. Can be defined as \code{c1=} in \code{opt_param}. Default is 0.49
 #' @param c2 Social scaling parameters. Can be defined as \code{c2=} in \code{opt_param}. Default is 0.49, 
-#' @param w.inert The inertia weight update method between \code{'constant','chaotic','sim.annealing','nat.exponent1','nat.exponent2'} based on Bansal (2011). 
+#' @param w.inert The inertia weight update method between \code{"constant"}, \code{"chaotic"}, \code{"sim.annealing"}, \code{"nat.exponent1"}, \code{"nat.exponent2"} based on Bansal (2011). 
 #' Can be defined as \code{type=} in \code{opt_param}. Default is \code{'sim.annealing'}
 #' @param wmax Maximum inertia weight. Can be defined as \code{wmax} in \code{opt_param}. Default is 0.9.
 #' @param wmin Minimum inertia weight. Can be defined as \code{wmin} in \code{opt_param}. Default is 0.4.

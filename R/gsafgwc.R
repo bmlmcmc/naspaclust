@@ -21,7 +21,7 @@
 #' @param gsa.same number of consecutive unchange to stop the iteration. Can be defined as \code{same=} in \code{opt_param}.
 #' @param G initial gravitatioal constant, Can be defined as \code{G} in \code{opt_param}. default is 1.
 #' @param vmax maximum velocity to be tolerated. Can be defined as \code{vmax} in \code{opt_param}. Default is 0.7
-#' @param new using the new algorithm by Li and Dong (2017). Can be defined as \code{new} in \code{opt_param}. Default is \code{FALSE}
+#' @param new Boolean that represents whether to use the new algorithm by Li and Dong (2017). Can be defined as \code{new} in \code{opt_param}. Default is \code{FALSE}
 
 #' @return an object of class \code{'fgwc'}.\cr
 #' An \code{'fgwc'} object contains as follows:
@@ -109,7 +109,7 @@ gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
     G <- G*runif(1,0.95,1)
     v <- force_v(par,par.no,G,v,vmax,par.dist,par.order,randomN)
     par.swarm <- lapply(1:npar, function (x) v[[x]] + par.swarm[[x]])
-    if(new==T){
+    if(new==TRUE){
       par.swarm <- lapply(1:npar,function(x) new.move(par.swarm[[x]],pbest[[x]],par.finalpos,randomN+x))
     }
     par.other <- lapply(1:npar, function(x) uij(data,par.swarm[[x]],m,distance,order))
@@ -117,7 +117,7 @@ gsafgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclide
   	par.swarm <- par$centroid <- lapply(1:npar, function(x) vi(data,par.other[[x]],m))
     par.fit <- par$I <- sapply(1:npar, function(x) jfgwcv(data,par.swarm[[x]],m,distance,order))
 
-    if(new==T){ 
+    if(new==TRUE){ 
       pbest.ind <- which(par.fit<pfit)
       if(length(pbest.ind)>0){
         for(i in pbest.ind){

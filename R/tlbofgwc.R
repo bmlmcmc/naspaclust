@@ -103,7 +103,7 @@ tlbofgwc <- function(data, pop=NA, distmat=NA, ncluster=2, m=2, distance='euclid
     studs.new <- teacher.phase(stud.swarm,stud.fit,teacher,class.ave,randomN,data,m,distance,order,mi.mj,distmat,alpha,beta,a,b)
     studs.new <- learner.phase(studs.new$studs,studs.new$fit,randomN+5,data,m,distance,order,mi.mj,distmat,alpha,beta,a,b)
 
-    if(elitism==T){
+    if(elitism==TRUE){
     	stud.swarm <- elitism(studs.new$studs,studs.new$fit,stud.finalpos,stud.fit.finalbest,n.elite,randomN+6)
     }
     else{

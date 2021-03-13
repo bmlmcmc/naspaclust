@@ -146,7 +146,7 @@ employed.bee <- function(swarm,fitness,pso,gbest,seed,data,m,distance,order,mi.m
     phi <- matrix(runif(ncol(swarm[[x]])*nrow(swarm[[x]]),-1,1),ncol=ncol(swarm[[x]]))
     a <- sample1[x]
     psi <- 0
-    if(pso==T){
+    if(pso==TRUE){
       set.seed(seed+10+x)
       psi <- matrix(runif(ncol(swarm[[x]])*nrow(swarm[[x]]),0,1.5),ncol=ncol(swarm[[x]]))
     }
@@ -172,7 +172,7 @@ onlooker.bee <- function(swarm,fit,t,prob,n.onlooker,pso,gbest,seed,data,m,dista
     phi <- matrix(runif(ncol(swarm[[x]])*nrow(swarm[[x]]),-1,1),ncol=ncol(swarm[[x]]))
     a <- sample1[x]
     psi <- 0
-    if(pso==T){
+    if(pso==TRUE){
       set.seed(seed+10+x)
       psi <- matrix(runif(ncol(oldswarm[[x]])*nrow(oldswarm[[x]]),0,1.5),ncol=ncol(oldswarm[[x]]))
     }
