@@ -101,7 +101,7 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
         if(is.na(opt_param['par.no'])|as.numeric(opt_param['par.no'])<0) par.no <- 2 else par.no <- as.numeric(opt_param['par.no'])
         if(is.na(opt_param['par.dist'])) par.dist <- 'euclidean' else par.dist <- opt_param['par.dist']
         if(is.na(opt_param['par.order'])|as.numeric(opt_param['par.order'])<0) par.order <- 2 else par.order <- as.numeric(opt_param['par.order'])
-        if(is.na(opt_param['pso'])|as.numeric(opt_param['pso'])<0) pso <- T else pso <- as.logical(opt_param['pso'])
+        if(is.na(opt_param['pso'])) pso <- TRUE else pso <- as.logical(opt_param['pso'])
         if(is.na(opt_param['same'])|as.numeric(opt_param['same'])<0) same <- 10 else same <- as.numeric(opt_param['same'])
         if(is.na(opt_param['type'])) type <- 'sim.annealing' else type <- opt_param['type']
         if(is.na(opt_param['ei.distr'])) ei.distr <- 'normal' else ei.distr <- opt_param['ei.distr']
@@ -109,7 +109,7 @@ fgwc <- function(data,pop,distmat,algorithm='classic',fgwc_param,opt_param){
         if(is.na(opt_param['wmax'])|as.numeric(opt_param['wmax'])<0) wmax <- 0.9 else wmax <- as.numeric(opt_param['wmax'])
         if(is.na(opt_param['wmin'])|as.numeric(opt_param['wmin'])<0) wmin <- 0.4 else wmin <- as.numeric(opt_param['wmin'])
         if(is.na(opt_param['chaos'])|as.numeric(opt_param['chaos'])<0) chaos <- 4 else chaos <- as.numeric(opt_param['chaos'])
-        if(is.na(opt_param['x0'])|as.numeric(opt_param['x0'])<0) x0 <- 'F' else x0 <- opt_param['x0']
+        if(is.na(opt_param['x0'])) x0 <- 'F' else x0 <- opt_param['x0']
         if(is.na(opt_param['map'])|as.numeric(opt_param['map'])<0) map <- 0.7 else map <- as.numeric(opt_param['map'])
         if(is.na(opt_param['ind'])|as.numeric(opt_param['ind'])<0) ind <- 1 else ind <- as.numeric(opt_param['ind'])
         if(is.na(opt_param['skew'])|as.numeric(opt_param['skew'])<0) skew <- 0 else skew <- as.numeric(opt_param['skew'])
