@@ -26,7 +26,7 @@ eiDist <- function(distr='normal',n,randomN=40,r=4,m=0.7,ind=1,skew=0,sca=1) {
     return(chebychaotic(n,randomN))
   }
   else if (distr=='circhaotic'){
-    return(sinechaotic(n,randomN))
+    return(circhaotic(n,randomN))
   }
 
 }
