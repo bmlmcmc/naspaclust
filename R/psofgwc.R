@@ -63,7 +63,7 @@
 #'                alpha=0.5,a=1.2,b=1.2,max.iter=1000,error=1e-6,randomN=10)
 #' ## tune the PSO parameter
 #' pso_param <- c(vi.dist='uniform',npar=15,
-#'          vmax=0.8, pso.same=10, c1=0.7, c2=0.6, w.inert='chaotic',
+#'          vmax=0.8, pso.same=10, c1=0.7, c2=0.6, type='chaotic',
 #'                      wmax=0.8,wmin=0.3,map=0.3)
 #' ##FGWC with PSO
 #' res2 <- fgwc(census2010,census2010pop,census2010dist,'pso',param_fgwc,pso_param)
