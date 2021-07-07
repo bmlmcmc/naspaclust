@@ -61,6 +61,7 @@ kentchaotic <- function(n,m=0.7,seed) {
 sinechaotic <- function(n,m,seed){
   set.seed(seed)
   x0 <- runif(1)
+  x <- c()
   for(i in 1:n) {
     x0 <- m/4*sin(x0)
     x <- c(x,x0)
@@ -71,6 +72,7 @@ sinechaotic <- function(n,m,seed){
 dyadchaotic <- function(n,seed){
   set.seed(seed)
   x0 <- runif(1)
+  x <- c()
   for(i in 1:n) {
     x0 <- (2*x0)%%1
     x <- c(x,x0)
@@ -81,8 +83,9 @@ dyadchaotic <- function(n,seed){
 chebychaotic <- function(n,seed){
   set.seed(seed)
   x0 <- runif(1)
+  x <- c()
   for(i in 1:n) {
-    x0 <- cos((i-1)*acos(x0))
+    x0 <- cos((i)*acos(x0))
     x <- c(x,x0)
   }
   return(x)
@@ -91,8 +94,9 @@ chebychaotic <- function(n,seed){
 circhaotic <- function(n,seed){
   set.seed(seed)
   x0 <- runif(1)
+  x <- c()
   for(i in 1:n) {
-    x0 <- x0+0.5-(a-2*pi)*sin(2*pi*x0)
+    x0 <- x0+0.2-(0.5-2*pi)*sin(2*pi*x0)
     x <- c(x,x0)
   }
   return(x)
