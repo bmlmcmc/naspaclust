@@ -16,6 +16,19 @@ eiDist <- function(distr='normal',n,randomN=40,r=4,m=0.7,ind=1,skew=0,sca=1) {
   else if (distr=="kentchaotic") {
     return(kentchaotic(n,m,randomN))
   }
+  else if (distr=='sinechaotic'){
+    return(sinechaotic(n,m,randomN))
+  }
+  else if (distr=='dyadchaotic'){
+    return(dyadchaotic(n,randomN))
+  }
+  else if (distr=='chebychaotic'){
+    return(chebychaotic(n,randomN))
+  }
+  else if (distr=='circhaotic'){
+    return(sinechaotic(n,randomN))
+  }
+
 }
 
 logchaotic <- function(n,r=4,seed=1) {
@@ -40,6 +53,46 @@ kentchaotic <- function(n,m=0.7,seed) {
     else {
       x0 <- (1-x0)/(1-m)
     }
+    x <- c(x,x0)
+  }
+  return(x)
+}
+
+sinechaotic <- function(n,m,seed){
+  set.seed(seed)
+  x0 <- runif(1)
+  for(i in 1:n) {
+    x0 <- m/4*sin(x0)
+    x <- c(x,x0)
+  }
+  return(x)
+}
+
+dyadchaotic <- function(n,seed){
+  set.seed(seed)
+  x0 <- runif(1)
+  for(i in 1:n) {
+    x0 <- (2*x0)%%1
+    x <- c(x,x0)
+  }
+  return(x)
+}
+
+chebychaotic <- function(n,seed){
+  set.seed(seed)
+  x0 <- runif(1)
+  for(i in 1:n) {
+    x0 <- cos((i-1)*acos(x0))
+    x <- c(x,x0)
+  }
+  return(x)
+}
+
+circhaotic <- function(n,seed){
+  set.seed(seed)
+  x0 <- runif(1)
+  for(i in 1:n) {
+    x0 <- x0+0.5-(a-2*pi)*sin(2*pi*x0)
     x <- c(x,x0)
   }
   return(x)

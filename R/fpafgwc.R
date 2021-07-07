@@ -142,6 +142,7 @@ pollination <- function(flow,p,pollen,gamma,lambda,delta,seed,ei.distr,r,m,skew,
   dd <- dim(pollen)
   return(lapply(1:length(flow),function(x){
     if(rand[x]<p){ ##global pollination
+      set.seed(seed<-seed+1)
       flow[[x]]+gamma*matrix(rstable(dd[1]*dd[2],lambda,skew,sca,delta),ncol=dd[2])*(pollen-flow[[x]])
     }
     else{ ##local pollination
