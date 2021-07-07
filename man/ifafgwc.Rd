@@ -79,9 +79,9 @@ ifafgwc(
 
 \item{gamma}{distance scaling factor. Can be defined as \code{gamma} in \code{opt_param}. Default is 1.}
 
-\item{ffly.beta}{. attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.}
+\item{ffly.beta}{Attractiveness constant. Can be defined as \code{beta} in \code{opt_param}. Default is 1.}
 
-\item{ffly.alpha}{number of consecutive unchange to stop the iteration. Can be defined as \code{alpha=} in \code{opt_param}.}
+\item{ffly.alpha}{Randomisation constant. Can be defined as \code{alpha=} in \code{opt_param}.}
 
 \item{r.chaotic}{weight in logistic chaotic between [0,4]. Can be used when \code{ei.distr='logchaotic'}. Can be defined as \code{chaos} in \code{opt_param}. Default is 4.}
 
