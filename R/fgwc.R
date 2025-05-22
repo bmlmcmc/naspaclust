@@ -10,7 +10,7 @@
 #' @param kind use \code{'u'} if you want to use membership approach and \code{'v'} for centroid approach.
 #' @param ncluster an integer. The number of clusters.
 #' @param m degree of fuzziness or fuzzifier. Default is 2.
-#' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.
+#' @param distance the distance metric between data and centroid, the default is euclidean, see \code{\link[rdist]{cdist}} for details.
 #' @param order, minkowski order. default is 2.
 #' @param alpha the old membership effect with [0,1], if \code{alpha} equals 1, it will be same as fuzzy C-Means, if 0, it equals to neighborhood effect.
 #' @param a spatial magnitude of distance. Default is 1.
@@ -28,7 +28,7 @@
 #' \item \code{f_obj} - objective function value
 #' \item \code{membership} - membership matrix
 #' \item \code{centroid} - centroid matrix
-#' \item \code{validation} - validation indices (there are partition coefficient (\code{PC}), classification entropy (\code{CE}), 
+#' \item \code{validation} - validation indices (there are partition coefficient (\code{PC}), classification entropy (\code{CE}),
 #' SC index (\code{SC}), separation index (\code{SI}), Xie and Beni's index (\code{XB}), IFV index (\code{IFV}), and Kwon index (Kwon))
 #' \item \code{max.iter} - Maximum iteration
 #' \item \code{cluster} - the cluster of the data
@@ -36,10 +36,10 @@
 #' \item \code{call} - the syntax called previously
 #' \item \code{time} - computational time.
 #' }
-#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding 
+#' @details Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgwc;textual}{naspaclust} by adding
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. There are two kinds of options in doing classical FGWC.
-#' The first is using \code{"u"} \insertCite{Runkler2006}{naspaclust} (default) for membership optimization 
-#' and \code{"v"} \insertCite{fgwc}{naspaclust} for centroid optimisation. 
+#' The first is using \code{"u"} \insertCite{Runkler2006}{naspaclust} (default) for membership optimization
+#' and \code{"v"} \insertCite{fgwc}{naspaclust} for centroid optimisation.
 
 #' @references
 #' \insertAllCited{}
