@@ -45,7 +45,7 @@
 #' neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
 #' the Particle Swarm Optimization was developed by \insertCite{Kennedy1995;textual}{naspaclust} in order to get a more optimal solution of a certain complex function.
 #' PSO was also improved by \insertCite{Bansal2011;textual}{naspaclust} by modifying the inertia weight. 
-#' FGWC using PSO has been implemented previously by some studies \insertCite{fgwcpso,putra2017,Abdussamad}{naspaclust}.
+#' FGWC using PSO has been implemented previously by some studies \insertCite{fgwcpso,putra2017}{naspaclust}.
 
 #' @references
 #' \insertAllCited{}

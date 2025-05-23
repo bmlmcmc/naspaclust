@@ -57,11 +57,11 @@ and \code{"bairathi"} \insertCite{Bairathi2018}{naspaclust}.
 \item \code{"ifa"} - Optimization using intelligent firefly algorithm based on \insertCite{Yang2009;textual}{naspaclust}, 
 as well as the intelligent improvement by \insertCite{intfa;textual}{naspaclust} \insertCite{@see also @Nasution2020 for FGWC implementation}{naspaclust}.
 \item \code{"pso"} - Optimization using particle swarm optimization based on \insertCite{Runkler2006;textual}{naspaclust} and 
-\insertCite{Bansal2011;textual}{naspaclust} for inertia option \insertCite{@see also @fgwcpso; @putra2017; @Abdussamad for FGWC implementation}{naspaclust}.
+\insertCite{Bansal2011;textual}{naspaclust} for inertia option \insertCite{@see also @fgwcpso; @putra2017 for FGWC implementation}{naspaclust}.
 \item \code{"tlbo"} - Optimization using teaching - learning based optimization based on \insertCite{Rao2012;textual}{naspaclust} and 
 elitism improvement by \insertCite{Rao2012b;textual}{naspaclust}.
 }
-Furthermore, there are 10 distance that can be used to calculate the membership (see \code{\link{cdist}} for details).
+Furthermore, there are 10 distance that can be used to calculate the membership (see \code{\link[rdist]{cdist}} for details).
 the default parameter of FGWC (in case you do not want to tune anything) is \cr \code{
 c(kind='u',ncluster=2,m=2,distance='euclidean',order=2,alpha=0.7,a=1,b=1,}\cr
 \code{max.iter=500,error=1e-5,randomN=1)}.\cr

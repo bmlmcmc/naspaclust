@@ -37,7 +37,7 @@ abcfgwc(
 
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
-\item{distance}{the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.}
+\item{distance}{the distance metric between data and centroid, the default is euclidean, see \code{\link[rdist]{cdist}} for details.}
 
 \item{order, }{minkowski order. default is 2.}
 

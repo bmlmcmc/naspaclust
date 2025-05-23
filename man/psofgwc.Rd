@@ -41,7 +41,7 @@ psofgwc(
 
 \item{m}{degree of fuzziness or fuzzifier. Default is 2.}
 
-\item{distance}{the distance metric between data and centroid, the default is euclidean, see \code{\link{cdist}} for details.}
+\item{distance}{the distance metric between data and centroid, the default is euclidean, see \code{\link[rdist]{cdist}} for details.}
 
 \item{order, }{minkowski order. default is 2.}
 
@@ -103,7 +103,7 @@ Fuzzy Geographically Weighted Clustering (FGWC) was developed by \insertCite{fgw
 neighborhood effects and population to configure the membership matrix in Fuzzy C-Means. Furthermore,
 the Particle Swarm Optimization was developed by \insertCite{Kennedy1995;textual}{naspaclust} in order to get a more optimal solution of a certain complex function.
 PSO was also improved by \insertCite{Bansal2011;textual}{naspaclust} by modifying the inertia weight. 
-FGWC using PSO has been implemented previously by some studies \insertCite{fgwcpso,putra2017,Abdussamad}{naspaclust}.
+FGWC using PSO has been implemented previously by some studies \insertCite{fgwcpso,putra2017}{naspaclust}.
 }
 \examples{
 data('census2010')
